@@ -1,0 +1,1381 @@
+/* ============================================
+   DESIGN TOKENS
+   Change these to retheme the entire site.
+   ============================================ */
+:root {
+  --night: #0a0e1a;
+  --night-deep: #050810;
+  --parchment: #f0e6d2;
+  --gold: #c9a869;
+  --gold-bright: #e6c988;
+  --castle-fill: #0d1120;
+  --castle-back-fill: #1a2036;
+  --ink: #2b2416;
+  --hall-wall: #171b2c;
+  --hall-stair: #23283e;
+
+  --font-display: 'Mrs Saint Delafield', cursive;
+  --font-body: 'EB Garamond', serif;
+  --font-hand: 'Caveat', cursive;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: var(--night);
+  color: var(--parchment);
+  font-family: var(--font-body);
+  font-size: 18px;
+  overflow-x: hidden;
+}
+
+body {
+  perspective: 1400px;
+}
+
+/* Respect reduced-motion preferences across the whole site */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================
+   AMBIENT BACKGROUND (stars, candles, castle)
+   Sits behind every section, fixed in place.
+   ============================================ */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse at 50% 20%, #151b30 0%, var(--night) 55%, var(--night-deep) 100%);
+  overflow: hidden;
+  transform-origin: center center;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+}
+
+.stars span {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--parchment);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.4); }
+}
+
+.candles {
+  position: absolute;
+  inset: 0;
+}
+
+.candle-flame {
+  position: absolute;
+  width: 3px;
+  height: 10px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(circle, var(--gold-bright) 0%, var(--gold) 60%, transparent 100%);
+  filter: blur(0.3px);
+  animation: flicker 2.6s ease-in-out infinite;
+  box-shadow: 0 0 8px 2px rgba(230, 201, 136, 0.5);
+}
+
+@keyframes flicker {
+  0%, 100% { transform: scaleY(1) translateY(0); opacity: 0.85; }
+  30% { transform: scaleY(0.9) translateY(1px); opacity: 1; }
+  50% { transform: scaleY(1.1) translateY(-1px); opacity: 0.75; }
+  75% { transform: scaleY(0.95); opacity: 0.95; }
+}
+
+.castle-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.castle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+}
+
+.castle-back {
+  height: 32vh;
+  opacity: 0.55;
+  filter: blur(1.5px);
+}
+
+.castle-front {
+  height: 40vh;
+  opacity: 0.97;
+  filter: drop-shadow(0 0 40px rgba(201,168,105,0.06));
+}
+
+/* Warm hazy glow rising from the base of the castle */
+.castle-base-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 22vh;
+  background: linear-gradient(0deg, rgba(201,168,105,0.14) 0%, rgba(201,168,105,0.04) 45%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Faint mirrored reflection, as if the castle sits across still water */
+.castle-reflection {
+  height: 40vh;
+  transform: scaleY(-1);
+  opacity: 0.16;
+  filter: blur(3px);
+  -webkit-mask-image: linear-gradient(0deg, transparent 0%, rgba(0,0,0,0.6) 55%, transparent 100%);
+  mask-image: linear-gradient(0deg, transparent 0%, rgba(0,0,0,0.6) 55%, transparent 100%);
+}
+
+/* Still lake surface at the very bottom, catching moon/window light */
+.lake {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8vh;
+  background: linear-gradient(180deg, rgba(30,40,65,0.65) 0%, rgba(10,14,26,0.92) 100%);
+}
+
+.lake::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    100deg,
+    rgba(230,201,136,0.05) 0px, rgba(230,201,136,0.05) 2px,
+    transparent 2px, transparent 14px
+  );
+  animation: shimmer 6s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(40px); }
+}
+
+.castle-window {
+  fill: var(--gold-bright);
+  opacity: 0.85;
+  animation: windowGlow 5s ease-in-out infinite;
+}
+
+.castle-window-tall { opacity: 0.75; }
+
+.castle-clock {
+  fill: var(--parchment);
+  opacity: 0.8;
+}
+
+.castle-flag {
+  fill: #7a2e2e;
+  opacity: 0.85;
+  transform-origin: left center;
+  animation: flagWave 2.4s ease-in-out infinite;
+}
+
+.castle-flag-b { animation-delay: 0.6s; }
+
+@keyframes flagWave {
+  0%, 100% { transform: skewY(0deg); }
+  50% { transform: skewY(4deg); }
+}
+
+@keyframes windowGlow {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.95; }
+}
+
+/* Soft directional moonlight wash across the whole castle scene,
+   breaking up the flat silhouette look without touching every shape */
+.castle-scene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 78% 0%, rgba(230,210,170,0.10), transparent 60%),
+    linear-gradient(200deg, rgba(255,255,255,0.05) 0%, transparent 30%, rgba(0,0,0,0.15) 100%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.moon {
+  position: absolute;
+  top: 4%;
+  right: 16%;
+  width: min(20vw, 170px);
+  height: auto;
+  filter: drop-shadow(0 0 40px rgba(240,235,210,0.35));
+}
+
+.moon-glow {
+  fill: rgba(240, 235, 210, 0.18);
+}
+
+.moon-disc {
+  fill: #f3ecd6;
+}
+
+.moon-crater {
+  fill: rgba(180, 165, 130, 0.35);
+}
+
+/* Soft drifting fog, subtle, sits above the castle but behind all content */
+.fog-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fog-blob {
+  position: absolute;
+  width: 60vw;
+  height: 30vh;
+  bottom: -5vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(210,215,235,0.10) 0%, rgba(210,215,235,0) 70%);
+  filter: blur(6px);
+}
+
+.fog-blob-a { left: -10vw; animation: driftRight 38s ease-in-out infinite; }
+.fog-blob-b { left: 30vw; bottom: 0; animation: driftLeft 46s ease-in-out infinite; }
+.fog-blob-c { left: 60vw; bottom: -8vh; animation: driftRight 55s ease-in-out infinite; }
+
+@keyframes driftRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(8vw); }
+}
+
+@keyframes driftLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-8vw); }
+}
+
+/* ============================================
+   INTRO SEQUENCE: clouds + owl delivering the letter
+   Plays once, on the first envelope tap.
+   ============================================ */
+.intro-sequence {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: none;
+  overflow: hidden;
+  background: var(--night);
+  pointer-events: none;
+}
+
+.intro-sequence.playing {
+  display: block;
+}
+
+.cloud {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(235,235,245,0.9) 0%, rgba(235,235,245,0) 72%);
+  opacity: 0;
+}
+
+.intro-sequence.playing .cloud {
+  animation: cloudPass 2.6s ease-in forwards;
+}
+
+.cloud-a { width: 50vw; height: 22vh; top: 18%; left: -55vw; animation-delay: 0s !important; }
+.cloud-b { width: 40vw; height: 18vh; top: 45%; left: -45vw; animation-delay: 0.15s !important; }
+.cloud-c { width: 55vw; height: 24vh; top: 65%; left: -60vw; animation-delay: 0.3s !important; }
+.cloud-d { width: 35vw; height: 16vh; top: 30%; left: -40vw; animation-delay: 0.45s !important; }
+
+@keyframes cloudPass {
+  0% { opacity: 0; transform: translateX(0); }
+  15% { opacity: 0.8; }
+  55% { opacity: 0.8; }
+  100% { opacity: 0; transform: translateX(160vw); }
+}
+
+.owl {
+  position: absolute;
+  width: 220px;
+  top: 38%;
+  left: -240px;
+  opacity: 0;
+}
+
+.owl-body { fill: #3a3f52; }
+.owl-belly { fill: #565c74; }
+.owl-wing { fill: #2c3040; }
+.owl-wing-front { fill: #232636; }
+.owl-eye { fill: #f0e6d2; }
+.owl-pupil { fill: #14192b; }
+.owl-beak { fill: var(--gold); }
+.owl-tuft { fill: #2c3040; }
+.owl-feet { stroke: var(--gold); stroke-width: 2.5; stroke-linecap: round; }
+.owl-letter-body { fill: var(--parchment); stroke: var(--gold); stroke-width: 1.5; }
+.owl-letter-flap { fill: none; stroke: var(--gold); stroke-width: 1.5; }
+
+.intro-sequence.playing .owl {
+  animation: owlFly 2.4s ease-in-out 0.6s forwards;
+}
+
+@keyframes owlFly {
+  0% { opacity: 0; left: -240px; top: 38%; transform: rotate(0deg); }
+  10% { opacity: 1; }
+  50% { left: 50%; top: 24%; transform: translateX(-50%) rotate(-4deg); }
+  85% { left: 50%; top: 28%; transform: translateX(-50%) rotate(2deg); opacity: 1; }
+  100% { left: 120%; top: 16%; transform: rotate(8deg); opacity: 0; }
+}
+
+.intro-sequence.playing .owl-wing-back,
+.intro-sequence.playing .owl-wing-front {
+  animation: flap 0.32s ease-in-out infinite alternate;
+  transform-origin: 110px 80px;
+}
+
+.intro-sequence.playing .owl-wing-front {
+  animation-delay: 0.05s;
+}
+
+@keyframes flap {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0.5); }
+}
+
+.intro-sequence.playing .owl-letter {
+  animation: letterDrop 1.3s cubic-bezier(0.5, 0, 0.7, 1) 2s forwards;
+}
+
+@keyframes letterDrop {
+  0% { transform: translate(110px, 132px) rotate(0deg); opacity: 1; }
+  70% { transform: translate(110px, 420px) rotate(160deg); opacity: 1; }
+  85% { transform: translate(110px, 460px) rotate(185deg); opacity: 1; }
+  100% { transform: translate(110px, 448px) rotate(178deg); opacity: 0; }
+}
+
+/* ============================================
+   ROOM TRANSITION OVERLAY
+   Fades in/out between every section change to
+   suggest moving from one room to the next.
+   ============================================ */
+.transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, rgba(20,25,45,0.55) 0%, rgba(5,8,16,0.97) 100%);
+  transition: opacity 0.5s ease;
+  overflow: hidden;
+}
+
+.transition-overlay.active {
+  opacity: 1;
+}
+
+.fog-sweep {
+  position: absolute;
+  width: 140%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(220,220,235,0.14) 0%, rgba(220,220,235,0) 70%);
+  filter: blur(4px);
+}
+
+.fog-sweep-a { top: 10%; left: -20%; animation: fogSweepMove 1.6s ease-in-out infinite alternate; }
+.fog-sweep-b { top: 45%; left: -30%; animation: fogSweepMove 2s ease-in-out infinite alternate-reverse; }
+
+@keyframes fogSweepMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(12%); }
+}
+
+@media (max-width: 480px) {
+  .owl { width: 150px; }
+  .cloud-a, .cloud-c { width: 75vw; }
+  .cloud-b, .cloud-d { width: 60vw; }
+}
+
+/* ============================================
+   SECTION / SCREEN LAYOUT
+   Each .screen is a full-viewport panel. Only
+   the .active one is visible. script.js toggles
+   the class — never delete this contract.
+   ============================================ */
+.screen {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ============================================
+   ENVELOPE SCREEN
+   ============================================ */
+.arrival-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 4vw, 2.1rem);
+  letter-spacing: 0.04em;
+  color: var(--parchment);
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeInDown 1.6s var(--ease-soft) 0.3s forwards;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.envelope {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: min(70vw, 260px);
+  opacity: 0;
+  animation: fadeInUp 1.4s var(--ease-soft) 1s forwards, hover 3.5s ease-in-out 2.4s infinite;
+  transition: transform 0.3s var(--ease-soft);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes hover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.envelope:hover {
+  transform: scale(1.04) perspective(600px) rotateX(4deg);
+}
+
+.envelope:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 6px;
+  border-radius: 6px;
+}
+
+.envelope-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+}
+
+.env-body {
+  fill: var(--parchment);
+  stroke: var(--gold);
+  stroke-width: 2;
+}
+
+.env-flap-back {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  opacity: 0.5;
+}
+
+.env-flap {
+  fill: #e3d5b6;
+  stroke: var(--gold);
+  stroke-width: 2;
+  transform-origin: 100px 8px;
+  transition: transform 0.6s var(--ease-soft);
+}
+
+.env-seal {
+  fill: var(--gold);
+  stroke: var(--gold-bright);
+  stroke-width: 1;
+}
+
+.env-seal-letter {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--night);
+}
+
+/* Opening animation state, triggered by JS adding .opening */
+.envelope.opening {
+  animation: none;
+  pointer-events: none;
+}
+
+.envelope.opening .env-flap {
+  transform: rotateX(180deg) translateY(2px);
+  opacity: 0;
+  transition: transform 0.7s var(--ease-soft), opacity 0.7s ease 0.1s;
+}
+
+.envelope.opening .envelope-svg {
+  animation: envelopeVanish 0.6s ease 0.55s forwards;
+}
+
+@keyframes envelopeVanish {
+  to { opacity: 0; transform: scale(0.9) translateY(-10px); }
+}
+
+.hint {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0;
+  animation: fadeIn 1s ease 2s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 0.7; }
+}
+
+/* ============================================
+   LETTER SCREEN
+   ============================================ */
+.parchment {
+  position: relative;
+  max-width: 560px;
+  width: 100%;
+  background: linear-gradient(180deg, #f4ead4 0%, #ecdfbf 100%);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 2.6rem 2.2rem 2rem;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5), inset 0 0 40px rgba(180, 145, 90, 0.15);
+  transform-origin: top center;
+  transform: scaleY(0.04) perspective(900px) rotateX(0deg);
+  opacity: 0;
+  animation: unfurl 1.1s var(--ease-soft) 0.2s forwards, parchmentDrift 6s ease-in-out 1.4s infinite;
+}
+
+@keyframes parchmentDrift {
+  0%, 100% { transform: perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0); }
+  50% { transform: perspective(900px) rotateX(1.5deg) rotateY(-1deg) translateY(-4px); }
+}
+
+@keyframes unfurl {
+  0% { transform: scaleY(0.04); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+.parchment-crest {
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+
+.letter-greeting {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  margin: 0 0 0.6rem;
+  text-align: left;
+}
+
+.letter-photo {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0.4rem auto 1.2rem;
+  border-radius: 2px;
+  transform: rotate(-1.2deg);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.35), 0 1px 0 rgba(0,0,0,0.15);
+  opacity: 0;
+  animation: fadeIn 1.2s ease 0.5s forwards;
+}
+
+/* Hidden by default; script.js reveals this only if the photo
+   above fails to load, so the page still looks complete either way. */
+.letter-photo-fallback {
+  display: none;
+}
+
+.letter-photo-fallback.show {
+  display: block;
+}
+
+.letter-body {
+  font-size: clamp(1.05rem, 2.6vw, 1.2rem);
+  line-height: 1.7;
+  text-align: left;
+  margin: 0 0 1.1rem;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+.letter-photo-fallback .letter-body:nth-child(1) { animation-delay: 0.3s; }
+.letter-photo-fallback .letter-body:nth-child(2) { animation-delay: 0.9s; }
+
+.letter-sign {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  text-align: right;
+  margin-top: 1.2rem;
+  opacity: 0;
+  animation: fadeIn 1s ease 2.1s forwards;
+}
+
+.continue-btn {
+  margin-top: 2.2rem;
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--parchment);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.7rem 2.2rem;
+  border-radius: 2px;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeIn 1s ease 2.6s forwards;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.continue-btn:hover {
+  background: var(--gold);
+  color: var(--night);
+  transform: translateY(-2px);
+}
+
+.continue-btn:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 4px;
+}
+
+/* ============================================
+   SORTING SCREEN
+   House colors are intentionally scoped to just
+   this section — the rest of the site stays on
+   the night/gold palette.
+   ============================================ */
+.sorting-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  margin: 0 0 0.4rem;
+}
+
+.sorting-sub {
+  color: var(--gold);
+  font-size: 0.95rem;
+  margin: 0 0 2.4rem;
+  letter-spacing: 0.02em;
+}
+
+.house-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  max-width: 720px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .house-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.house-card {
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid rgba(201,168,105,0.3);
+  border-radius: 8px;
+  padding: 1.2rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-soft), border-color 0.25s ease, background 0.25s ease;
+}
+
+.house-card:hover,
+.house-card:focus-visible {
+  transform: translateY(-4px) perspective(700px) rotateX(6deg) rotateY(-4deg);
+  border-color: var(--house-color, var(--gold));
+  background: rgba(255,255,255,0.06);
+}
+
+.house-card:focus-visible { outline: none; }
+
+.house-crest { width: 52px; height: 52px; }
+
+.crest-shape {
+  fill: none;
+  stroke: var(--house-color, var(--gold));
+  stroke-width: 2;
+  opacity: 0.7;
+}
+
+.crest-mark {
+  fill: var(--house-color, var(--gold));
+  stroke: var(--house-color, var(--gold));
+}
+
+.house-name {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+}
+
+.house-card[data-house="gryffindor"] { --house-color: #b8433a; }
+.house-card[data-house="ravenclaw"]  { --house-color: #4a6fa5; }
+.house-card[data-house="hufflepuff"] { --house-color: #d9a441; }
+.house-card[data-house="slytherin"]  { --house-color: #3f7a5c; }
+
+.house-card.chosen {
+  border-color: var(--house-color);
+  background: rgba(255,255,255,0.08);
+}
+
+.house-card.dimmed {
+  opacity: 0.35;
+  transform: scale(0.96);
+}
+
+.house-verdict {
+  margin-top: 2.4rem;
+  max-width: 480px;
+  min-height: 1px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+}
+
+.house-verdict.revealed {
+  display: flex;
+  animation: fadeIn 0.7s ease forwards;
+}
+
+.house-verdict-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--verdict-color, var(--gold));
+  margin: 0 0 0.4rem;
+}
+
+.house-verdict-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 0 1.6rem;
+}
+
+/* ============================================
+   MEMORY ROOM
+   ============================================ */
+
+/* Original grand-staircase portrait-hall backdrop */
+.hall-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+.memory-foreground {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hall-stair-lines path {
+  stroke: rgba(0,0,0,0.25);
+  stroke-width: 2;
+}
+
+.hall-frames rect {
+  fill: #1c1f30;
+  stroke: var(--gold);
+  stroke-width: 2;
+  opacity: 0.75;
+}
+
+.hall-frame-glow rect {
+  fill: rgba(201,168,105,0.12);
+  animation: frameFlicker 6s ease-in-out infinite;
+}
+
+.hall-frame-glow rect:nth-child(2) { animation-delay: 1.2s; }
+.hall-frame-glow rect:nth-child(3) { animation-delay: 2.4s; }
+.hall-frame-glow rect:nth-child(4) { animation-delay: 3.6s; }
+
+@keyframes frameFlicker {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+.chandelier-chain {
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  opacity: 0.5;
+}
+
+.chandelier-core {
+  fill: var(--gold);
+  opacity: 0.7;
+}
+
+.chandelier-candle {
+  fill: var(--gold-bright);
+  animation: windowGlow 3.5s ease-in-out infinite;
+}
+
+.memory-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  margin: 0 0 0.2rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+
+.memory-sub {
+  color: var(--gold);
+  font-size: 1rem;
+  margin: 0 0 2.2rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.frame-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  max-width: 720px;
+  width: 100%;
+}
+
+.frame-card {
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid rgba(201,168,105,0.35);
+  border-radius: 6px;
+  padding: 1.4rem 0.8rem;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--parchment);
+  transition: transform 0.25s var(--ease-soft), border-color 0.25s ease, background 0.25s ease;
+}
+
+.frame-card:hover,
+.frame-card:focus-visible {
+  transform: translateY(-3px) scale(1.02) perspective(700px) rotateX(5deg) rotateY(-3deg);
+  border-color: var(--gold-bright);
+  background: rgba(255,255,255,0.07);
+  outline: none;
+}
+
+.frame-card.opened {
+  border-color: var(--gold);
+  background: rgba(201,168,105,0.1);
+}
+
+.memory-reveal {
+  margin-top: 2rem;
+  max-width: 560px;
+  min-height: 1px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+}
+
+.memory-reveal.revealed {
+  display: flex;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.memory-reveal-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--gold-bright);
+  margin: 0 0 0.3rem;
+}
+
+.memory-reveal-text {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ============================================
+   MAP SCREEN
+   Overrides the default centered .screen layout:
+   this section scrolls as a tall portrait page.
+   ============================================ */
+.screen.map-screen {
+  display: none;
+  min-height: 100vh;
+  align-items: flex-start;
+  padding-top: 4rem;
+  padding-bottom: 3rem;
+}
+
+.screen.map-screen.active {
+  display: flex;
+}
+
+.map-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  margin: 0 0 0.2rem;
+}
+
+.map-sub {
+  color: var(--gold);
+  font-size: 1.1rem;
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.map-scroll {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 1rem auto 0;
+  padding-bottom: 2rem;
+}
+
+.map-path-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 40px;
+  width: 3px;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--gold) 0px, var(--gold) 8px,
+    transparent 8px, transparent 18px
+  );
+  opacity: 0.4;
+}
+
+.map-stop {
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.map-stop:nth-child(odd) { justify-content: flex-start; }
+.map-stop:nth-child(even) { justify-content: flex-end; }
+
+.footprint {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 34px;
+  transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-soft), transform 0.6s var(--ease-soft);
+  z-index: 2;
+}
+
+.footprint::before,
+.footprint::after {
+  content: '';
+  position: absolute;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+.footprint::before {
+  width: 14px;
+  height: 20px;
+  left: 4px;
+  top: 8px;
+  border-radius: 50% 50% 45% 45%;
+}
+
+.footprint::after {
+  width: 6px;
+  height: 6px;
+  left: 8px;
+  top: 0;
+  box-shadow: 8px 1px 0 -1px var(--gold), 3px -2px 0 -1.5px var(--gold), 12px -1px 0 -1.5px var(--gold);
+}
+
+.map-stop:nth-child(odd) .footprint { transform: translate(-50%, -50%) scale(0.4) rotate(-14deg); }
+.map-stop:nth-child(even) .footprint { transform: translate(-50%, -50%) scale(0.4) rotate(14deg); }
+
+.map-stop.in-view .footprint {
+  opacity: 0.85;
+}
+
+.map-stop:nth-child(odd).in-view .footprint { transform: translate(-50%, -50%) scale(1) rotate(-14deg); }
+.map-stop:nth-child(even).in-view .footprint { transform: translate(-50%, -50%) scale(1) rotate(14deg); }
+
+.map-stop-content {
+  position: relative;
+  width: 46%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,105,0.35);
+  border-radius: 8px;
+  padding: 1.1rem 1.2rem;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-soft), transform 0.8s var(--ease-soft);
+}
+
+.map-stop:nth-child(odd) .map-stop-content {
+  transform: translateX(-24px) perspective(600px) rotateY(6deg);
+}
+
+.map-stop:nth-child(even) .map-stop-content {
+  transform: translateX(24px) perspective(600px) rotateY(-6deg);
+}
+
+.map-stop.in-view .map-stop-content {
+  opacity: 1;
+  transform: translateX(0) perspective(600px) rotateY(0deg);
+}
+
+.map-stop-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--gold-bright);
+  margin: 0 0 0.4rem;
+}
+
+.map-stop-text {
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .map-path-line { left: 20px; }
+  .map-stop-content { width: calc(100% - 60px); }
+  .map-stop:nth-child(odd),
+  .map-stop:nth-child(even) { justify-content: flex-end; }
+  .footprint { left: 20px; }
+  .map-stop:nth-child(odd) .map-stop-content,
+  .map-stop:nth-child(even) .map-stop-content {
+    transform: translateX(12px) perspective(600px) rotateY(-4deg);
+  }
+  .map-stop.in-view .map-stop-content {
+    transform: translateX(0) perspective(600px) rotateY(0deg);
+  }
+}
+
+/* ============================================
+   FINAL BIRTHDAY ROOM
+   ============================================ */
+.final-content {
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.final-message {
+  font-family: var(--font-body);
+  font-size: clamp(1.4rem, 4vw, 1.75rem);
+  line-height: 1.5;
+  white-space: pre-line;
+  opacity: 0;
+  animation: fadeIn 1.4s ease 0.2s forwards;
+}
+
+.spell-btn {
+  margin-top: 2.4rem;
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--parchment);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  padding: 0.85rem 2.4rem;
+  border-radius: 2px;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.4s forwards;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.spell-btn:hover {
+  background: var(--gold);
+  color: var(--night);
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px rgba(230,201,136,0.5);
+}
+
+.spell-btn:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 4px;
+}
+
+.spell-btn.cast {
+  pointer-events: none;
+  animation: fadeIn 1s ease forwards, castPulse 0.6s ease;
+}
+
+@keyframes castPulse {
+  0% { box-shadow: 0 0 0 rgba(230,201,136,0); }
+  50% { box-shadow: 0 0 40px rgba(230,201,136,0.8); }
+  100% { box-shadow: 0 0 0 rgba(230,201,136,0); }
+}
+
+.final-content.hidden {
+  animation: fadeOutUp 0.6s ease forwards;
+}
+
+@keyframes fadeOutUp {
+  to { opacity: 0; transform: translateY(-14px); }
+}
+
+.final-reveal {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.final-reveal.shown {
+  display: flex;
+  animation: fadeIn 1s ease forwards;
+}
+
+.final-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 6vw, 3.2rem);
+  color: var(--gold-bright);
+  text-align: center;
+  text-shadow: 0 0 30px rgba(230,201,136,0.5);
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 8px;
+  height: 14px;
+  opacity: 0.9;
+  animation-name: confettiFall;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(540deg); opacity: 0.3; }
+}
+
+/* ============================================
+   OPENING SPELL SCENE
+   Plays automatically once on page load, then
+   fades to reveal the envelope screen beneath.
+   ============================================ */
+.spell-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: radial-gradient(ellipse at 50% 30%, #10152a 0%, var(--night-deep) 100%);
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+.spell-intro.fading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.spell-intro.done {
+  display: none;
+}
+
+.spell-sky {
+  position: absolute;
+  inset: 0;
+}
+
+.spell-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--parchment);
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: twinkle 3.5s ease-in-out infinite;
+}
+
+.spell-lake {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 22%;
+  background: linear-gradient(180deg, rgba(30,40,65,0.6) 0%, rgba(8,11,22,0.95) 100%);
+}
+
+.spell-figure {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  width: 90px;
+  transform: translateX(-50%);
+}
+
+.spell-shadow { fill: rgba(0,0,0,0.4); }
+.spell-body, .spell-head { fill: #0d1120; }
+.spell-arm, .spell-wand {
+  stroke: #0d1120;
+  stroke-width: 5;
+  stroke-linecap: round;
+  fill: none;
+  transform-origin: 46px 95px;
+  transition: transform 1.1s var(--ease-soft);
+}
+.spell-wand {
+  stroke-width: 3;
+  stroke: var(--gold);
+  transform-origin: 20px 60px;
+}
+
+.spell-figure.casting .spell-arm,
+.spell-figure.casting .spell-wand {
+  transform: rotate(-55deg);
+}
+
+.spell-glow {
+  position: absolute;
+  bottom: 32%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, var(--gold-bright) 40%, transparent 75%);
+  transform: translate(-140%, 0) scale(0.2);
+  opacity: 0;
+  box-shadow: 0 0 20px 6px rgba(230,201,136,0.6);
+  transition: transform 1.1s var(--ease-soft), opacity 0.6s ease;
+}
+
+.spell-glow.charging {
+  opacity: 1;
+  transform: translate(-140%, 0) scale(6);
+}
+
+.spell-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 68%, #fff 0%, rgba(255,255,255,0.6) 30%, transparent 70%);
+  opacity: 0;
+}
+
+.spell-flash.burst {
+  animation: spellFlash 0.6s ease-out forwards;
+}
+
+@keyframes spellFlash {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.spell-fireworks {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.firework-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  animation-name: fireworkBurst;
+  animation-timing-function: cubic-bezier(0.15, 0.6, 0.35, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes fireworkBurst {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.3); opacity: 0; }
+}
+
+.spell-message {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  opacity: 0;
+  filter: blur(18px);
+  transition: opacity 1.4s ease, filter 1.4s ease;
+}
+
+.spell-message.reveal {
+  opacity: 1;
+  filter: blur(0);
+}
+
+.spell-message h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 8vw, 4rem);
+  color: var(--gold-bright);
+  text-shadow: 0 0 30px rgba(230,201,136,0.6);
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .spell-figure { width: 64px; }
+}

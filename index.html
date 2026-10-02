@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Birthday Letter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Caveat:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- OPENING SCENE: plays automatically once, before the envelope screen.
+       Original silhouette + generic spell/firework effect — not the
+       franchise's specific character design or named spell. -->
+  <div class="spell-intro" id="spell-intro" aria-hidden="true">
+    <div class="spell-sky">
+      <span class="spell-star" style="left:12%; top:15%;"></span>
+      <span class="spell-star" style="left:80%; top:10%;"></span>
+      <span class="spell-star" style="left:65%; top:25%;"></span>
+      <span class="spell-star" style="left:30%; top:8%;"></span>
+      <span class="spell-star" style="left:50%; top:20%;"></span>
+      <span class="spell-star" style="left:20%; top:30%;"></span>
+      <span class="spell-star" style="left:90%; top:35%;"></span>
+    </div>
+
+    <div class="spell-lake"></div>
+
+    <svg class="spell-figure" id="spell-figure" viewBox="0 0 120 220" aria-hidden="true">
+      <ellipse cx="60" cy="210" rx="30" ry="6" class="spell-shadow"/>
+      <path d="M60,60 C50,60 44,72 46,90 L40,150 L44,200 L54,200 L58,150
+               L62,150 L66,200 L76,200 L80,150 L74,90 C76,72 70,60 60,60 Z" class="spell-body"/>
+      <circle cx="60" cy="46" r="16" class="spell-head"/>
+      <path d="M46,95 L20,60" class="spell-arm" id="spell-arm"/>
+      <line x1="20" y1="60" x2="6" y2="34" class="spell-wand" id="spell-wand"/>
+    </svg>
+
+    <div class="spell-glow" id="spell-glow"></div>
+    <div class="spell-flash" id="spell-flash"></div>
+    <div class="spell-fireworks" id="spell-fireworks"></div>
+
+    <div class="spell-message" id="spell-message">
+      <h1>Happy Birthday<br>Chayanika</h1>
+    </div>
+  </div>
+
+  <!-- Ambient background layer: stars + floating candles, sits behind every section -->
+  <div class="ambient" aria-hidden="true">
+    <div class="stars" id="stars"></div>
+    <div class="candles" id="candles"></div>
+    <div class="fog-layer">
+      <div class="fog-blob fog-blob-a"></div>
+      <div class="fog-blob fog-blob-b"></div>
+      <div class="fog-blob fog-blob-c"></div>
+    </div>
+    <svg class="moon" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="34" class="moon-glow"/>
+      <circle cx="50" cy="50" r="22" class="moon-disc"/>
+      <circle cx="42" cy="42" r="4" class="moon-crater"/>
+      <circle cx="58" cy="55" r="3" class="moon-crater"/>
+      <circle cx="48" cy="60" r="2.4" class="moon-crater"/>
+    </svg>
+
+    <!-- Distant castle layer: soft, hazy, further back -->
+    <div class="castle-scene">
+    <svg class="castle castle-back" viewBox="0 0 1200 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <path d="M0,260 L0,190 L60,190 L60,150 L100,150 L100,190 L170,190 L170,120 L200,90 L230,120 L230,190
+               L300,190 L300,160 L340,160 L340,190 L420,190 L420,110 L450,80 L480,110 L480,190
+               L560,190 L560,170 L600,170 L600,190 L680,190 L680,130 L710,100 L740,130 L740,190
+               L820,190 L820,150 L860,150 L860,190 L930,190 L930,100 L965,65 L1000,100 L1000,190
+               L1080,190 L1080,160 L1120,160 L1120,190 L1200,190 L1200,260 Z" fill="var(--castle-back-fill)"/>
+    </svg>
+
+    <!-- Soft ground mist glowing warm at the castle's base -->
+    <div class="castle-base-glow"></div>
+
+    <!-- Near castle layer: taller towers, sharper edges, lit windows -->
+    <svg class="castle castle-front" viewBox="0 0 1200 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <g id="castleFrontShapes">
+
+      <!-- tower 1 -->
+      <g>
+        <rect x="20" y="150" width="70" height="90" fill="var(--castle-fill)"/>
+        <polygon points="20,150 55,105 90,150" fill="var(--castle-fill)"/>
+        <rect x="45" y="175" width="10" height="16" class="castle-window"/>
+      </g>
+      <!-- tower 2 (tall, central-left) -->
+      <g>
+        <rect x="130" y="70" width="60" height="170" fill="var(--castle-fill)"/>
+        <polygon points="130,70 160,20 190,70" fill="var(--castle-fill)"/>
+        <rect x="150" y="100" width="9" height="14" class="castle-window"/>
+        <rect x="150" y="140" width="9" height="14" class="castle-window"/>
+        <rect x="150" y="180" width="9" height="14" class="castle-window"/>
+      </g>
+      <!-- connecting low wall + walkway -->
+      <rect x="190" y="195" width="120" height="45" fill="var(--castle-fill)"/>
+      <rect x="200" y="205" width="8" height="12" class="castle-window"/>
+      <rect x="230" y="205" width="8" height="12" class="castle-window"/>
+      <rect x="270" y="205" width="8" height="12" class="castle-window"/>
+
+      <!-- tower 3 (round-ish, onion roof) -->
+      <g>
+        <rect x="320" y="110" width="55" height="130" fill="var(--castle-fill)"/>
+        <path d="M320,110 Q347,55 375,110 Z" fill="var(--castle-fill)"/>
+        <rect x="338" y="140" width="9" height="14" class="castle-window"/>
+        <rect x="338" y="180" width="9" height="14" class="castle-window"/>
+      </g>
+
+      <!-- great hall block, widest, central -->
+      <g>
+        <rect x="390" y="150" width="220" height="90" fill="var(--castle-fill)"/>
+        <polygon points="390,150 460,95 500,150" fill="var(--castle-fill)"/>
+        <polygon points="500,150 570,95 610,150" fill="var(--castle-fill)"/>
+        <rect x="415" y="175" width="10" height="18" class="castle-window castle-window-tall"/>
+        <rect x="450" y="175" width="10" height="18" class="castle-window castle-window-tall"/>
+        <rect x="485" y="175" width="10" height="18" class="castle-window castle-window-tall"/>
+        <rect x="520" y="175" width="10" height="18" class="castle-window castle-window-tall"/>
+        <rect x="555" y="175" width="10" height="18" class="castle-window castle-window-tall"/>
+      </g>
+
+      <!-- tallest central spire (clocktower-like) -->
+      <g>
+        <rect x="630" y="40" width="50" height="200" fill="var(--castle-fill)"/>
+        <polygon points="630,40 655,-15 680,40" fill="var(--castle-fill)"/>
+        <circle cx="655" cy="70" r="9" class="castle-window castle-clock"/>
+        <rect x="648" y="110" width="9" height="14" class="castle-window"/>
+        <rect x="648" y="150" width="9" height="14" class="castle-window"/>
+        <rect x="648" y="190" width="9" height="14" class="castle-window"/>
+      </g>
+
+      <!-- connecting wall -->
+      <rect x="680" y="200" width="110" height="40" fill="var(--castle-fill)"/>
+      <rect x="700" y="212" width="8" height="12" class="castle-window"/>
+      <rect x="735" y="212" width="8" height="12" class="castle-window"/>
+
+      <!-- tower 4 -->
+      <g>
+        <rect x="790" y="95" width="60" height="145" fill="var(--castle-fill)"/>
+        <polygon points="790,95 820,45 850,95" fill="var(--castle-fill)"/>
+        <rect x="810" y="125" width="9" height="14" class="castle-window"/>
+        <rect x="810" y="165" width="9" height="14" class="castle-window"/>
+        <rect x="810" y="200" width="9" height="14" class="castle-window"/>
+      </g>
+
+      <!-- low wing -->
+      <rect x="850" y="180" width="130" height="60" fill="var(--castle-fill)"/>
+      <rect x="865" y="195" width="9" height="14" class="castle-window"/>
+      <rect x="895" y="195" width="9" height="14" class="castle-window"/>
+      <rect x="925" y="195" width="9" height="14" class="castle-window"/>
+      <rect x="955" y="195" width="9" height="14" class="castle-window"/>
+
+      <!-- tower 5 (tallest, far right, viaduct tower) -->
+      <g>
+        <rect x="990" y="60" width="65" height="180" fill="var(--castle-fill)"/>
+        <polygon points="990,60 1022,5 1055,60" fill="var(--castle-fill)"/>
+        <rect x="1012" y="95" width="10" height="16" class="castle-window"/>
+        <rect x="1012" y="135" width="10" height="16" class="castle-window"/>
+        <rect x="1012" y="175" width="10" height="16" class="castle-window"/>
+        <rect x="1012" y="205" width="10" height="16" class="castle-window"/>
+      </g>
+
+      <!-- final small tower -->
+      <g>
+        <rect x="1080" y="140" width="55" height="100" fill="var(--castle-fill)"/>
+        <polygon points="1080,140 1107,95 1135,140" fill="var(--castle-fill)"/>
+        <rect x="1098" y="170" width="9" height="14" class="castle-window"/>
+      </g>
+
+      <!-- extra slender spires clustered near the great hall, for a denser skyline -->
+      <g>
+        <rect x="605" y="130" width="18" height="60" fill="var(--castle-fill)"/>
+        <polygon points="605,130 614,100 623,130" fill="var(--castle-fill)"/>
+      </g>
+      <g>
+        <rect x="785" y="140" width="16" height="55" fill="var(--castle-fill)"/>
+        <polygon points="785,140 793,112 801,140" fill="var(--castle-fill)"/>
+      </g>
+
+      <!-- small flags atop two towers -->
+      <path d="M655,-15 L655,-32 L672,-24 Z" class="castle-flag castle-flag-a"/>
+      <path d="M1022,5 L1022,-14 L1039,-6 Z" class="castle-flag castle-flag-b"/>
+        </g>
+      </defs>
+      <use href="#castleFrontShapes"/>
+    </svg>
+
+    <!-- Faint mirrored reflection of the near castle, as if seen across the lake -->
+    <svg class="castle castle-reflection" viewBox="0 0 1200 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <use href="#castleFrontShapes"/>
+    </svg>
+
+    <!-- Still lake at the very base, catching the moonlight -->
+    <div class="lake"></div>
+    </div>
+  </div>
+
+  <!-- One-time cloud + owl intro, played when the envelope is first opened -->
+  <div class="intro-sequence" id="intro-sequence" aria-hidden="true">
+    <div class="cloud cloud-a"></div>
+    <div class="cloud cloud-b"></div>
+    <div class="cloud cloud-c"></div>
+    <div class="cloud cloud-d"></div>
+    <svg class="owl" viewBox="0 0 220 150" id="owl">
+      <ellipse cx="110" cy="80" rx="42" ry="34" class="owl-body"/>
+      <ellipse cx="110" cy="95" rx="30" ry="22" class="owl-belly"/>
+      <path d="M64,75 Q20,90 55,125 Q75,105 78,82 Z" class="owl-wing owl-wing-back"/>
+      <path d="M156,75 Q200,90 165,125 Q145,105 142,82 Z" class="owl-wing owl-wing-back"/>
+      <path d="M70,78 Q45,88 62,108 Q78,96 80,80 Z" class="owl-wing owl-wing-front"/>
+      <path d="M150,78 Q175,88 158,108 Q142,96 140,80 Z" class="owl-wing owl-wing-front"/>
+      <circle cx="92" cy="66" r="13" class="owl-eye"/>
+      <circle cx="128" cy="66" r="13" class="owl-eye"/>
+      <circle cx="92" cy="66" r="5" class="owl-pupil"/>
+      <circle cx="128" cy="66" r="5" class="owl-pupil"/>
+      <path d="M104,78 L116,78 L110,88 Z" class="owl-beak"/>
+      <path d="M70,44 Q110,16 150,44 Q110,32 70,44 Z" class="owl-tuft"/>
+      <path d="M96,120 L96,138 M110,122 L110,140 M124,120 L124,138" class="owl-feet"/>
+      <g class="owl-letter" transform="translate(110,132)">
+        <rect x="-16" y="-11" width="32" height="22" rx="2" class="owl-letter-body"/>
+        <path d="M-16,-11 L0,4 L16,-11" class="owl-letter-flap"/>
+      </g>
+    </svg>
+  </div>
+
+
+  <!-- Fog transition used between every section change, giving the
+       feel of moving from one Hogwarts room to the next -->
+  <div class="transition-overlay" id="transition-overlay" aria-hidden="true">
+    <div class="fog-sweep fog-sweep-a"></div>
+    <div class="fog-sweep fog-sweep-b"></div>
+  </div>
+
+  <!-- SECTION 1: Envelope / Landing -->
+  <section class="screen active" data-section="envelope" id="envelope-screen">
+    <p class="arrival-text" id="arrival-text">A letter has arrived for Chaya&hellip;</p>
+
+    <button class="envelope" id="envelope" aria-label="Open the letter">
+      <svg viewBox="0 0 200 140" class="envelope-svg">
+        <rect x="4" y="4" width="192" height="132" rx="4" class="env-body"/>
+        <path d="M4,8 L100,86 L196,8" class="env-flap-back"/>
+        <path d="M4,8 L100,80 L196,8 Z" class="env-flap"/>
+        <circle cx="100" cy="70" r="12" class="env-seal"/>
+        <text x="100" y="75" text-anchor="middle" class="env-seal-letter">C</text>
+      </svg>
+    </button>
+
+    <p class="hint">tap the letter</p>
+  </section>
+
+  <!-- SECTION 2: Hogwarts Letter -->
+  <section class="screen" data-section="letter" id="letter-screen">
+    <div class="parchment">
+      <div class="parchment-crest" aria-hidden="true">✦</div>
+      <p class="letter-greeting">Dear Chaya,</p>
+
+      <!-- Your own handwritten letter photo goes here.
+           Put the image file inside the assets/ folder and set
+           the exact filename below (jpg, jpeg, png, or webp all work). -->
+      <img
+        class="letter-photo"
+        id="letter-photo"
+        src="assets/handwritten-letter.jpg"
+        alt="A handwritten letter to Chaya">
+
+      <!-- Shown only if the image above fails to load (e.g. file not
+           added yet), so the page never looks broken in the meantime. -->
+      <div class="letter-photo-fallback" id="letter-photo-fallback">
+        <p class="letter-body">
+          Yes, I could write an entire book about you — about me, about us,
+          about our bond, and about all the strange, beautiful, and absolutely
+          crazy conversations we've had.
+        </p>
+        <p class="letter-body">
+          But no cap — no imaginary version of you. Just you, me, and the
+          strange little story that happened between two people who probably
+          never expected to meet each other.
+        </p>
+      </div>
+
+      <p class="letter-sign">— with mischief managed,<br>your fellow wizard</p>
+    </div>
+    <button class="continue-btn" id="letter-continue">Continue</button>
+  </section>
+
+  <!-- SECTION 3: Sorting Ceremony -->
+  <section class="screen" data-section="sorting" id="sorting-screen">
+    <h2 class="sorting-title">The Sorting Ceremony</h2>
+    <p class="sorting-sub">Choose a house. The hat already has opinions.</p>
+
+    <div class="house-grid" id="house-grid">
+      <button class="house-card" data-house="gryffindor">
+        <svg viewBox="0 0 80 80" class="house-crest">
+          <polygon points="40,6 74,26 74,54 40,74 6,54 6,26" class="crest-shape"/>
+          <path d="M40,24 L52,40 L40,56 L28,40 Z" class="crest-mark"/>
+        </svg>
+        <span class="house-name">Gryffindor</span>
+      </button>
+
+      <button class="house-card" data-house="ravenclaw">
+        <svg viewBox="0 0 80 80" class="house-crest">
+          <polygon points="40,6 74,26 74,54 40,74 6,54 6,26" class="crest-shape"/>
+          <path d="M40,22 L46,36 L60,38 L49,47 L52,61 L40,53 L28,61 L31,47 L20,38 L34,36 Z" class="crest-mark"/>
+        </svg>
+        <span class="house-name">Ravenclaw</span>
+      </button>
+
+      <button class="house-card" data-house="hufflepuff">
+        <svg viewBox="0 0 80 80" class="house-crest">
+          <polygon points="40,6 74,26 74,54 40,74 6,54 6,26" class="crest-shape"/>
+          <circle cx="40" cy="40" r="15" class="crest-mark" fill="none" stroke-width="4"/>
+        </svg>
+        <span class="house-name">Hufflepuff</span>
+      </button>
+
+      <button class="house-card" data-house="slytherin">
+        <svg viewBox="0 0 80 80" class="house-crest">
+          <polygon points="40,6 74,26 74,54 40,74 6,54 6,26" class="crest-shape"/>
+          <path d="M40,20 C30,30 30,42 40,60 C50,42 50,30 40,20 Z" class="crest-mark"/>
+        </svg>
+        <span class="house-name">Slytherin</span>
+      </button>
+    </div>
+
+    <div class="house-verdict" id="house-verdict">
+      <p class="house-verdict-name" id="house-verdict-name"></p>
+      <p class="house-verdict-text" id="house-verdict-text"></p>
+      <button class="continue-btn" id="sorting-continue">Continue</button>
+    </div>
+  </section>
+
+  <!-- SECTION 4: Memory Room -->
+  <section class="screen" data-section="memory" id="memory-screen">
+
+    <!-- Original portrait-hall backdrop: staircase, framed portraits, chandelier -->
+    <svg class="hall-backdrop" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect x="0" y="0" width="800" height="500" fill="var(--hall-wall)"/>
+
+      <!-- staircase, converging toward center -->
+      <path d="M0,500 L280,340 L520,340 L800,500 Z" fill="var(--hall-stair)"/>
+      <g class="hall-stair-lines">
+        <path d="M40,470 L300,320" /><path d="M90,485 L320,325" /><path d="M140,498 L340,330" />
+        <path d="M760,470 L500,320" /><path d="M710,485 L480,325" /><path d="M660,498 L460,330" />
+      </g>
+
+      <!-- rows of hanging portrait frames along both walls -->
+      <g class="hall-frames">
+        <rect x="40" y="70" width="70" height="90" rx="2"/>
+        <rect x="130" y="60" width="60" height="78" rx="2"/>
+        <rect x="205" y="90" width="55" height="70" rx="2"/>
+        <rect x="60" y="180" width="65" height="82" rx="2"/>
+        <rect x="150" y="185" width="58" height="72" rx="2"/>
+
+        <rect x="690" y="70" width="70" height="90" rx="2"/>
+        <rect x="610" y="60" width="60" height="78" rx="2"/>
+        <rect x="540" y="90" width="55" height="70" rx="2"/>
+        <rect x="675" y="180" width="65" height="82" rx="2"/>
+        <rect x="590" y="185" width="58" height="72" rx="2"/>
+      </g>
+      <g class="hall-frame-glow">
+        <rect x="46" y="76" width="58" height="78" rx="1"/>
+        <rect x="136" y="66" width="48" height="66" rx="1"/>
+        <rect x="696" y="76" width="58" height="78" rx="1"/>
+        <rect x="616" y="66" width="48" height="66" rx="1"/>
+      </g>
+
+      <!-- hanging chandelier -->
+      <g class="hall-chandelier">
+        <line x1="400" y1="0" x2="400" y2="70" class="chandelier-chain"/>
+        <circle cx="400" cy="80" r="6" class="chandelier-core"/>
+        <circle cx="378" cy="95" r="4" class="chandelier-candle"/>
+        <circle cx="422" cy="95" r="4" class="chandelier-candle"/>
+        <circle cx="400" cy="105" r="4" class="chandelier-candle"/>
+        <circle cx="360" cy="88" r="3" class="chandelier-candle"/>
+        <circle cx="440" cy="88" r="3" class="chandelier-candle"/>
+      </g>
+    </svg>
+
+    <div class="memory-foreground">
+      <h2 class="memory-title">The Memory Room</h2>
+      <p class="memory-sub">Every frame holds something only we'd get.</p>
+
+      <div class="frame-grid" id="frame-grid">
+        <!-- Frame buttons are generated by script.js from SITE_DATA.memories,
+             so adding a new memory later is just adding one entry there. -->
+      </div>
+
+      <div class="memory-reveal" id="memory-reveal">
+        <p class="memory-reveal-title" id="memory-reveal-title"></p>
+        <p class="memory-reveal-text" id="memory-reveal-text"></p>
+      </div>
+
+      <button class="continue-btn" id="memory-continue">Continue</button>
+    </div>
+  </section>
+
+  <!-- SECTION 5: The Map -->
+  <section class="screen map-screen" data-section="map" id="map-screen">
+    <h2 class="map-title">A Map of Sorts</h2>
+    <p class="map-sub">Not all who wander are lost. Follow the footsteps down.</p>
+
+    <div class="map-scroll" id="map-scroll">
+      <div class="map-path-line" aria-hidden="true"></div>
+      <!-- Stops + footprints are generated by script.js from
+           SITE_DATA.mapCategories — adding a category later is
+           just adding one entry there. -->
+    </div>
+
+    <button class="continue-btn" id="map-continue">Continue</button>
+  </section>
+
+  <!-- SECTION 6: Final Birthday Room -->
+  <section class="screen" data-section="final" id="final-screen">
+    <div class="final-content" id="final-content">
+      <p class="final-message" id="final-message"></p>
+      <button class="spell-btn" id="spell-btn">One last spell ✨</button>
+    </div>
+
+    <div class="final-reveal" id="final-reveal" aria-hidden="true">
+      <h1 class="final-headline">Happy Birthday, Chaya 🩶</h1>
+    </div>
+
+    <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
