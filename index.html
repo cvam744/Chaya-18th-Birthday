@@ -6,44 +6,12 @@
 <title>The Birthday Letter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Caveat:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><radialGradient id="snb"><stop offset="0" stop-color="#fff8d0"/><stop offset=".5" stop-color="#f2c94c"/><stop offset="1" stop-color="#9c6c14"/></radialGradient></defs></svg>
 
-  <!-- OPENING SCENE: plays automatically once, before the envelope screen.
-       Original silhouette + generic spell/firework effect — not the
-       franchise's specific character design or named spell. -->
-  <div class="spell-intro" id="spell-intro" aria-hidden="true">
-    <div class="spell-sky">
-      <span class="spell-star" style="left:12%; top:15%;"></span>
-      <span class="spell-star" style="left:80%; top:10%;"></span>
-      <span class="spell-star" style="left:65%; top:25%;"></span>
-      <span class="spell-star" style="left:30%; top:8%;"></span>
-      <span class="spell-star" style="left:50%; top:20%;"></span>
-      <span class="spell-star" style="left:20%; top:30%;"></span>
-      <span class="spell-star" style="left:90%; top:35%;"></span>
-    </div>
-
-    <div class="spell-lake"></div>
-
-    <svg class="spell-figure" id="spell-figure" viewBox="0 0 120 220" aria-hidden="true">
-      <ellipse cx="60" cy="210" rx="30" ry="6" class="spell-shadow"/>
-      <path d="M60,60 C50,60 44,72 46,90 L40,150 L44,200 L54,200 L58,150
-               L62,150 L66,200 L76,200 L80,150 L74,90 C76,72 70,60 60,60 Z" class="spell-body"/>
-      <circle cx="60" cy="46" r="16" class="spell-head"/>
-      <path d="M46,95 L20,60" class="spell-arm" id="spell-arm"/>
-      <line x1="20" y1="60" x2="6" y2="34" class="spell-wand" id="spell-wand"/>
-    </svg>
-
-    <div class="spell-glow" id="spell-glow"></div>
-    <div class="spell-flash" id="spell-flash"></div>
-    <div class="spell-fireworks" id="spell-fireworks"></div>
-
-    <div class="spell-message" id="spell-message">
-      <h1>Happy Birthday<br>Chayanika</h1>
-    </div>
-  </div>
 
   <!-- Ambient background layer: stars + floating candles, sits behind every section -->
   <div class="ambient" aria-hidden="true">
@@ -231,8 +199,61 @@
     <div class="fog-sweep fog-sweep-b"></div>
   </div>
 
-  <!-- SECTION 1: Envelope / Landing -->
-  <section class="screen active" data-section="envelope" id="envelope-screen">
+  <!-- LANDING: misty castle vista, golden title, and a winged ball that flies as you scroll -->
+  <section class="screen landing-screen active" data-section="landing" id="landing-screen">
+    <div class="landing-spacer"></div>
+    <div class="landing-stage" id="landing-stage">
+      <div class="l-sky"></div>
+      <svg class="l-layer l-castle" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path class="l-rock" d="M460,520 C520,610 640,700 800,770 C960,700 1080,610 1140,520Z"/>
+        <g class="l-castle-shapes">
+          <rect x="700" y="260" width="70" height="262"/><polygon points="692,262 735,110 778,262"/>
+          <rect x="560" y="380" width="140" height="142"/><polygon points="552,382 630,320 708,382"/>
+          <rect x="790" y="300" width="60" height="222"/><polygon points="782,302 820,170 858,302"/>
+          <rect x="870" y="340" width="44" height="182"/><polygon points="864,342 892,240 920,342"/>
+          <rect x="930" y="280" width="56" height="242"/><polygon points="924,282 958,160 992,282"/>
+          <rect x="1000" y="390" width="90" height="132"/>
+          <rect x="500" y="420" width="46" height="102"/><polygon points="494,422 523,350 552,422"/>
+          <rect x="1090" y="470" width="350" height="18"/><rect x="1130" y="488" width="14" height="130"/><rect x="1230" y="488" width="14" height="130"/><rect x="1330" y="488" width="14" height="130"/>
+          <rect x="1420" y="390" width="46" height="98"/><polygon points="1414,392 1443,330 1472,392"/>
+        </g>
+        <g class="l-win"><rect x="729" y="300" width="9" height="14"/><rect x="729" y="360" width="9" height="14"/><rect x="729" y="420" width="9" height="14"/><rect x="812" y="330" width="9" height="14"/><rect x="812" y="390" width="9" height="14"/><rect x="812" y="450" width="9" height="14"/><rect x="900" y="380" width="9" height="14"/><rect x="900" y="440" width="9" height="14"/><rect x="950" y="330" width="9" height="14"/><rect x="950" y="400" width="9" height="14"/><rect x="950" y="460" width="9" height="14"/><rect x="600" y="420" width="9" height="14"/><rect x="640" y="420" width="9" height="14"/><rect x="1030" y="430" width="9" height="14"/><rect x="1060" y="430" width="9" height="14"/><rect x="518" y="460" width="9" height="14"/></g>
+        <rect id="castle-target" x="812" y="330" width="9" height="14" fill="none"/>
+      </svg>
+      <div class="l-fog l-fog-a"></div><div class="l-fog l-fog-b"></div>
+      <svg class="l-layer l-front" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <path fill="#0a0b0c" d="M400,900 L560,850 L700,815 L800,800 L900,815 L1040,850 L1200,900Z"/>
+        <g class="l-figure" fill="#08090b">
+          <path d="M772,620 C758,670 750,745 740,806 L862,806 C852,745 844,670 828,620 C812,608 788,608 772,620Z"/>
+          <ellipse cx="800" cy="598" rx="23" ry="27"/>
+          <path d="M828,640 C850,640 872,626 892,612" stroke="#08090b" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <line x1="892" y1="612" x2="934" y2="586" stroke="#d8c9a6" stroke-width="2.5"/>
+        </g>
+        <circle id="wand-tip" class="l-wand-glow" cx="934" cy="586" r="4"/>
+      </svg>
+      <div class="l-fireworks" id="l-fireworks"></div>
+      <div class="l-end-glow"></div>
+      <div class="l-title">
+        <p class="l-top" id="l-top"></p>
+        <h1 class="l-name" id="l-name"></h1>
+        <p class="l-title-sub">a little magic, made just for you</p>
+      </div>
+      <div class="snitch-trail" id="snitch-trail"></div>
+      <div class="snitch" id="snitch">
+        <svg class="snitch-svg" viewBox="0 0 96 64" aria-hidden="true">
+          <path class="sw sw-l" d="M38,32 C26,16 10,12 2,18 C12,22 16,28 20,32 C12,34 6,40 5,48 C16,44 28,40 38,36Z"/>
+          <path class="sw sw-r" d="M58,32 C70,16 86,12 94,18 C84,22 80,28 76,32 C84,34 90,40 91,48 C80,44 68,40 58,36Z"/>
+          <circle cx="48" cy="34" r="11" fill="url(#snb)"/>
+        </svg>
+      </div>
+      <button class="l-hint" id="l-hint">Scroll<span></span></button>
+      <button class="continue-btn l-cta" id="l-cta">Open your invitation</button>
+      <div class="l-curtain"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: Envelope -->
+  <section class="screen" data-section="envelope" id="envelope-screen">
     <p class="arrival-text" id="arrival-text">A letter has arrived for Chaya&hellip;</p>
 
     <button class="envelope" id="envelope" aria-label="Open the letter">
@@ -245,23 +266,23 @@
       </svg>
     </button>
 
-    <p class="hint">tap the letter</p>
+    <p class="hint">Cut the cake</p>
   </section>
 
   <!-- SECTION 2: Hogwarts Letter -->
   <section class="screen" data-section="letter" id="letter-screen">
     <div class="parchment">
       <div class="parchment-crest" aria-hidden="true">✦</div>
-      <p class="letter-greeting">Dear Chaya,</p>
+      <p class="letter-greeting">To the one and only Miss Unique,</p>
 
-      <!-- Your own handwritten letter photo goes here.
+      <!-- Your own handwritten letter photo goes here (just page 1 of 7).
            Put the image file inside the assets/ folder and set
            the exact filename below (jpg, jpeg, png, or webp all work). -->
       <img
         class="letter-photo"
         id="letter-photo"
         src="assets/handwritten-letter.jpg"
-        alt="A handwritten letter to Chaya">
+        alt="A handwritten letter to Chaya — page 1">
 
       <!-- Shown only if the image above fails to load (e.g. file not
            added yet), so the page never looks broken in the meantime. -->
@@ -278,6 +299,14 @@
         </p>
       </div>
 
+      <!-- REPLACE the href below with your actual Google Drive share link
+           to the full 7-page PDF. Open the PDF in Drive, click Share,
+           set it to "Anyone with the link", copy that link, and paste
+           it here in place of the # placeholder. -->
+      <a class="read-more-btn" id="read-more-link" href="#" target="_blank" rel="noopener">
+        Read the rest of the letter →
+      </a>
+
       <p class="letter-sign">— with mischief managed,<br>your fellow wizard</p>
     </div>
     <button class="continue-btn" id="letter-continue">Continue</button>
@@ -290,6 +319,15 @@
 
     <div class="house-grid" id="house-grid">
       <button class="house-card" data-house="gryffindor">
+        <svg class="house-hat" viewBox="0 0 80 70" aria-hidden="true">
+          <ellipse cx="40" cy="60" rx="36" ry="7" class="hat-brim"/>
+          <path d="M16,58 C22,40 30,26 40,6 C44,16 46,12 52,20 C58,34 62,46 64,58 Z" class="hat-body"/>
+          <path d="M40,6 C44,14 50,16 52,20 C48,18 44,20 40,6 Z" class="hat-fold"/>
+          <path d="M17,54 L63,54 L64,58 L16,58 Z" class="hat-band"/>
+          <rect x="30" y="34" width="9" height="9" rx="1" class="hat-patch" transform="rotate(-8 34 38)"/>
+          <path d="M30,34 L39,33 L40,42 L31,43 Z" class="hat-stitch"/>
+        </svg>
+        
         <svg viewBox="0 0 80 80" class="house-crest">
           <polygon points="40,6 74,26 74,54 40,74 6,54 6,26" class="crest-shape"/>
           <path d="M40,24 L52,40 L40,56 L28,40 Z" class="crest-mark"/>
@@ -298,6 +336,15 @@
       </button>
 
       <button class="house-card" data-house="ravenclaw">
+        <svg class="house-hat" viewBox="0 0 80 70" aria-hidden="true">
+          <ellipse cx="40" cy="60" rx="36" ry="7" class="hat-brim"/>
+          <path d="M16,58 C22,40 30,26 40,6 C44,16 46,12 52,20 C58,34 62,46 64,58 Z" class="hat-body"/>
+          <path d="M40,6 C44,14 50,16 52,20 C48,18 44,20 40,6 Z" class="hat-fold"/>
+          <path d="M17,54 L63,54 L64,58 L16,58 Z" class="hat-band"/>
+          <rect x="30" y="34" width="9" height="9" rx="1" class="hat-patch" transform="rotate(-8 34 38)"/>
+          <path d="M30,34 L39,33 L40,42 L31,43 Z" class="hat-stitch"/>
+        </svg>
+        
         <svg viewBox="0 0 80 80" class="house-crest">
           <polygon points="40,6 74,26 74,54 40,74 6,54 6,26" class="crest-shape"/>
           <path d="M40,22 L46,36 L60,38 L49,47 L52,61 L40,53 L28,61 L31,47 L20,38 L34,36 Z" class="crest-mark"/>
@@ -306,6 +353,15 @@
       </button>
 
       <button class="house-card" data-house="hufflepuff">
+        <svg class="house-hat" viewBox="0 0 80 70" aria-hidden="true">
+          <ellipse cx="40" cy="60" rx="36" ry="7" class="hat-brim"/>
+          <path d="M16,58 C22,40 30,26 40,6 C44,16 46,12 52,20 C58,34 62,46 64,58 Z" class="hat-body"/>
+          <path d="M40,6 C44,14 50,16 52,20 C48,18 44,20 40,6 Z" class="hat-fold"/>
+          <path d="M17,54 L63,54 L64,58 L16,58 Z" class="hat-band"/>
+          <rect x="30" y="34" width="9" height="9" rx="1" class="hat-patch" transform="rotate(-8 34 38)"/>
+          <path d="M30,34 L39,33 L40,42 L31,43 Z" class="hat-stitch"/>
+        </svg>
+        
         <svg viewBox="0 0 80 80" class="house-crest">
           <polygon points="40,6 74,26 74,54 40,74 6,54 6,26" class="crest-shape"/>
           <circle cx="40" cy="40" r="15" class="crest-mark" fill="none" stroke-width="4"/>
@@ -314,18 +370,21 @@
       </button>
 
       <button class="house-card" data-house="slytherin">
+        <svg class="house-hat" viewBox="0 0 80 70" aria-hidden="true">
+          <ellipse cx="40" cy="60" rx="36" ry="7" class="hat-brim"/>
+          <path d="M16,58 C22,40 30,26 40,6 C44,16 46,12 52,20 C58,34 62,46 64,58 Z" class="hat-body"/>
+          <path d="M40,6 C44,14 50,16 52,20 C48,18 44,20 40,6 Z" class="hat-fold"/>
+          <path d="M17,54 L63,54 L64,58 L16,58 Z" class="hat-band"/>
+          <rect x="30" y="34" width="9" height="9" rx="1" class="hat-patch" transform="rotate(-8 34 38)"/>
+          <path d="M30,34 L39,33 L40,42 L31,43 Z" class="hat-stitch"/>
+        </svg>
+        
         <svg viewBox="0 0 80 80" class="house-crest">
           <polygon points="40,6 74,26 74,54 40,74 6,54 6,26" class="crest-shape"/>
           <path d="M40,20 C30,30 30,42 40,60 C50,42 50,30 40,20 Z" class="crest-mark"/>
         </svg>
         <span class="house-name">Slytherin</span>
       </button>
-    </div>
-
-    <div class="house-verdict" id="house-verdict">
-      <p class="house-verdict-name" id="house-verdict-name"></p>
-      <p class="house-verdict-text" id="house-verdict-text"></p>
-      <button class="continue-btn" id="sorting-continue">Continue</button>
     </div>
   </section>
 
@@ -378,7 +437,7 @@
 
     <div class="memory-foreground">
       <h2 class="memory-title">The Memory Room</h2>
-      <p class="memory-sub">Every frame holds something only we'd get.</p>
+      <p class="memory-sub">Every frame holds something only we'd get. Swipe through them.</p>
 
       <div class="frame-grid" id="frame-grid">
         <!-- Frame buttons are generated by script.js from SITE_DATA.memories,
@@ -422,6 +481,33 @@
 
     <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
   </section>
+
+  <!-- HOUSE DOOR: doors swing open to reveal the chosen house's story -->
+  <div class="door-stage" id="door-stage" aria-hidden="false">
+    <div class="door-glow"></div>
+
+    <article class="story-panel" id="story-panel">
+      <button class="story-back" id="story-back">&larr; Choose another house</button>
+      <h2 class="story-title" id="story-title"></h2>
+      <p class="story-subtitle" id="story-subtitle"></p>
+      <p class="story-epigraph" id="story-epigraph"></p>
+      <div class="story-body" id="story-body"></div>
+      <button class="continue-btn story-continue" id="story-continue">Enter the Memory Room &rarr;</button>
+    </article>
+
+    <div class="door door-left"><span class="door-ring"></span></div>
+    <div class="door door-right"><span class="door-ring"></span></div>
+  </div>
+
+  <!-- Companion ball: follows your finger/cursor and drifts as you scroll, on every page after the landing -->
+  <div class="g-trail" id="g-trail"></div>
+  <div class="g-ball" id="g-ball">
+    <svg class="snitch-svg" viewBox="0 0 96 64" aria-hidden="true">
+      <path class="sw sw-l" d="M38,32 C26,16 10,12 2,18 C12,22 16,28 20,32 C12,34 6,40 5,48 C16,44 28,40 38,36Z"/>
+      <path class="sw sw-r" d="M58,32 C70,16 86,12 94,18 C84,22 80,28 76,32 C84,34 90,40 91,48 C80,44 68,40 58,36Z"/>
+      <circle cx="48" cy="34" r="11" fill="url(#snb)"/>
+    </svg>
+  </div>
 
   <script src="script.js"></script>
 </body>

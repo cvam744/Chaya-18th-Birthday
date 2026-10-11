@@ -6,42 +6,155 @@
    add content.
    ============================================ */
 const SITE_DATA = {
-  arrivalText: "A letter has arrived for Chaya…",
+  arrivalText: "An invitation has arrived from HAWGWORD for the beautiful girl on her birthday…",
   houseResponses: {
     gryffindor: "Of course. The confidence was already suspiciously obvious.",
     ravenclaw: "This explains the overthinking.",
     hufflepuff: "Okay, this one was never in doubt.",
     slytherin: "I knew there was a little mastermind hiding somewhere."
   },
+  houseStories: {
+      "gryffindor": {
+          "name": "Gryffindor",
+          "subtitle": "The house that was meant to defeat fear",
+          "paragraphs": [
+              "Godric Gryffindor believed that the most dangerous weapon in the world wasn't a curse.",
+              "It was fear.",
+              "Fear could make a good person betray a friend. It could make a powerful wizard obey an evil master. It could convince an entire society that cruelty was necessary for survival.",
+              "So Godric wanted to train witches and wizards who could stand against fear, even when the consequences were terrible.",
+              "But there's a secret hidden inside this idea.",
+              "What if Gryffindor's real purpose was to create people who could resist the temptation to become monsters, even when the entire world demanded that they become one?",
+              "Think about Harry.",
+              "He had countless opportunities to become cruel. He suffered, lost people he loved, and repeatedly faced enemies who wanted him dead.",
+              "Yet he never truly embraced the idea that suffering gave him the right to hurt innocent people.",
+              "His courage wasn't simply the ability to face death.",
+              "It was his refusal to let hatred decide who he would become.",
+              "But Gryffindor had a weakness.",
+              "A person who isn't afraid of death might eventually stop valuing their own life. And someone who believes they're always fighting for the right cause can become dangerous without realizing it.",
+              "Perhaps Godric understood this. Perhaps Gryffindor was never supposed to teach students to fight every battle.",
+              "It was supposed to teach them to face the battles that mattered."
+          ]
+      },
+      "slytherin": {
+          "name": "Slytherin",
+          "subtitle": "The house that was meant to survive the impossible",
+          "paragraphs": [
+              "Now we come to Salazar Slytherin.",
+              "Everyone remembers his prejudice against Muggle-born wizards. But imagine that beneath his terrible beliefs was a different fear: the fear that the magical world could be destroyed by forces it wasn't prepared to face.",
+              "In this theory, Salazar believed that kindness alone couldn't protect anyone.",
+              "You needed strategy. You needed discipline. You needed the ability to understand your enemies before they understood you.",
+              "He wanted students who could survive when the rules broke down.",
+              "But Salazar made one fatal mistake: he began believing that the right to survive belonged only to certain people.",
+              "He confused strength with superiority.",
+              "He confused protecting magic with controlling who deserved to possess it.",
+              "And slowly, the house that could have taught people how to survive darkness became associated with the desire to dominate others.",
+              "Now consider Voldemort.",
+              "He was the ultimate example of ambition without a limit. He wanted to defeat death itself, but he couldn't understand that his obsession with survival was destroying everything that made life worth living.",
+              "He feared death so deeply that he became willing to destroy other people's lives to escape it.",
+              "In our theory, Voldemort represents the ultimate failure of Salazar's philosophy.",
+              "He possessed the desire to survive, but not the wisdom to understand why survival mattered.",
+              "And perhaps the greatest Slytherin isn't the person who wins every battle.",
+              "It's the person who can obtain power and still refuse to become a slave to it."
+          ]
+      },
+      "ravenclaw": {
+          "name": "Ravenclaw",
+          "subtitle": "The house that discovered something it shouldn't have",
+          "paragraphs": [
+              "Rowena Ravenclaw wanted students to pursue knowledge, but imagine that her search for wisdom led her somewhere terrifying.",
+              "What if she discovered that magic had rules far older than the wizarding world?",
+              "Rules that even the founders couldn't fully understand.",
+              "She began investigating the relationship between magic, consciousness, memory, and death. Every answer revealed another mystery. Every discovery made the universe seem less predictable.",
+              "Eventually, she encountered a question that no spell could answer:",
+              "If magic can change the world, can it also change the person who believes they understand it?",
+              "Imagine a wizard who learns every spell, understands every magical creature, and discovers the secrets of immortality.",
+              "That wizard might begin to believe that anything they don't understand is merely something they haven't conquered yet.",
+              "And that is where knowledge becomes dangerous.",
+              "In this theory, Rowena's greatest fear wasn't ignorance.",
+              "It was intelligence without limits.",
+              "Her daughter Helena's theft of the diadem could then serve as a symbolic tragedy: the pursuit of recognition and wisdom became entangled with resentment, secrecy, and loss.",
+              "Not because knowledge itself is evil, but because people can use even their greatest gifts to escape their own insecurities.",
+              "This also changes how we see Hermione.",
+              "Hermione is brilliant, but some of her most important moments happen when she recognizes that facts alone aren't enough. She needs trust, friendship, courage, and the willingness to act without knowing every possible outcome.",
+              "Perhaps Ravenclaw's ultimate lesson is that the universe doesn't owe us an answer to every question.",
+              "And wisdom begins when we understand the difference between what we can learn and what we have the right to control."
+          ]
+      },
+      "hufflepuff": {
+          "name": "Hufflepuff",
+          "subtitle": "The house that was meant to keep the other three from destroying everything",
+          "paragraphs": [
+              "Here's the biggest twist in the entire theory.",
+              "What if Helga Hufflepuff understood something the other founders didn't?",
+              "Gryffindor could fight darkness.",
+              "Slytherin could outsmart it.",
+              "Ravenclaw could understand it.",
+              "But none of those abilities guaranteed that anyone would remember what they were fighting for.",
+              "That was Helga's concern.",
+              "She believed that magic had no purpose if it destroyed the people it was supposed to serve.",
+              "So she valued patience, fairness, loyalty, and hard work.",
+              "Not because these qualities were less impressive than bravery or intelligence, but because they were the foundation that made those other qualities useful.",
+              "Think about what happens when the other houses lose their balance.",
+              "Gryffindor might sacrifice everything in pursuit of victory.",
+              "Slytherin might sacrifice others to preserve its own power.",
+              "Ravenclaw might sacrifice human connection in pursuit of knowledge.",
+              "But Hufflepuff asks a different question:",
+              "When the battle is over, who will still be there to rebuild what was lost?",
+              "Imagine that Helga's true purpose was to preserve something the other founders couldn't protect through magic alone: the ability to trust one another.",
+              "Her house would teach students to keep promises, care for those who couldn't repay them, and continue working when nobody was watching.",
+              "But even Hufflepuff had a weakness.",
+              "Loyalty can become blind obedience. Patience can become silence in the face of injustice. Kindness can become the fear of disappointing others.",
+              "True loyalty sometimes means standing against the very people you love.",
+              "And perhaps that is why Hufflepuff's philosophy is so important.",
+              "It reminds the wizarding world that being good isn't just about what you are willing to fight for.",
+              "It's also about what you refuse to become while fighting."
+          ]
+      }
+  },
   memories: [
     {
       title: "The Day We Met",
-      text: "We met in the GC, but I texted you in DM for the very first time on 4th July 2024. I dropped everything into just a single text because I wasn't getting an option to text you directly, so I replied to your story instead. 🥹 Looking back, it feels like such a small moment, but honestly, I had no idea that one little reply would become the beginning of something so special. ❤️"
+      text: "We met in the GC, but I texted you in DM for the very first time on 4th July 2024. I dropped everything into just a single text because I wasn't getting an option to text you directly, so I replied to your story instead. Looking back, it feels like such a small moment, but honestly, I had no idea that one little reply would become the beginning of something so special."
     },
     {
       title: "Dayan",
-      text: "Although I have so many memories I could put here, let's not do that — we'd probably need an entire book. 😂 I still remember the very first time you said in the GC that you were Dayan. It was kind of nerdy, but definitely so cute. 🥹 I genuinely had so much fun talking to you, especially when I used to address you as \"Dayan,\" or even better, \"Sweet Dayan.\" ❤️ Somehow, even the simplest conversations with you became memories that stayed with me."
+      text: "Although I have so many memories I could put here, let's not do that — we'd probably need an entire book. I still remember the very first time you said in the GC that you were Dayan. It was kind of nerdy, but definitely so cute. I genuinely had so much fun talking to you, especially when I used to address you as \"Dayan,\" or even better, \"Sweet Dayan.\" Somehow, even the simplest conversations with you became memories that stayed with me."
     },
     {
       title: "The Kite Runner",
-      text: "I never really had the courage to talk about my past with anyone. Then I read The Kite Runner, and somehow, this book inspired me to finally open up to you. I may have been a little clingy when I told you everything — or, well, not everything, actually. 😭 At that time, I felt completely helpless. I still do sometimes whenever I think about my past. There are things that are difficult to explain, and even harder to carry alone. But the way you listened to me gave me a little relief. It made me realise that, finally, I had someone with whom I could share things without having to think twice or worry about being judged. And honestly, that feeling meant more to me than I could ever properly explain. ❤️"
+      text: "I never really had the courage to talk about my past with anyone. Then I read The Kite Runner, and somehow, this book inspired me to finally open up to you. I may have been a little clingy when I told you everything — or, well, not everything, actually. At that time, I felt completely helpless. I still do sometimes whenever I think about my past. There are things that are difficult to explain, and even harder to carry alone. But the way you listened to me gave me a little relief. It made me realise that, finally, I had someone with whom I could share things without having to think twice or worry about being judged. And honestly, that feeling meant more to me than I could ever properly explain."
     },
     {
-      title: "Human",
-      text: "I understand that you may have felt a little disappointed about what happened between me and Karan. But trust me, Chayanika, that's just how human nature works. We all expect something from the people we care about, and when they don't live up to those expectations, we sometimes end up hurting ourselves more than they ever could. And when humans are hurt, they often behave in strange ways. Maybe they say things they don't mean, maybe they distance themselves, or maybe they simply become someone you don't recognise anymore. So, honestly, I didn't want to hold on to that. Maybe I lost him as a good friend, but somewhere along the way, I gained you as a best friend. And if I had to choose between holding on to what was lost and being grateful for what I found, I'd choose you every single time. ❤️"
+      title: "Friendship",
+      text: "I understand that you may have felt a little disappointed about what happened between me and Karan. But trust me, Chayanika, that's just how human nature works. We all expect something from the people we care about, and when they don't live up to those expectations, we sometimes end up hurting ourselves more than they ever could. And when humans are hurt, they often behave in strange ways. Maybe they say things they don't mean, maybe they distance themselves, or maybe they simply become someone you don't recognise anymore. So, honestly, I didn't want to hold on to that. Maybe I lost him as a good friend, but somewhere along the way, I gained you as a best friend. And if I had to choose between holding on to what was lost and being grateful for what I found, I'd choose you every single time."
     },
     {
       title: "The Freshers Dress",
-      text: "Trust me, Chayanika, you should seriously build your career in fashion designing or modelling. 😂❤️ I should have posted so many pictures of you on this website, but I genuinely never got the chance to screenshot them because I couldn't take my eyes away from the beauty of God's creation. 😭✨ Okay, okay… that sounds extremely dramatic. 😂 But honestly, you looked absolutely beautiful. I could have taken a hundred screenshots, but then again, I can't exactly take something without someone's concern. 😭😂 So I just kept admiring you instead. ❤️ Some people wear an outfit. You somehow make the outfit look lucky. ✨"
+      text: "Trust me, Chayanika, you should seriously build your career in fashion designing or modelling. I should have posted so many pictures of you on this website, but I genuinely never got the chance to screenshot them because I couldn't take my eyes away from the beauty of God's creation. Okay, okay… that sounds extremely dramatic. But honestly, you looked absolutely beautiful. I could have taken a hundred screenshots, but then again, I can't exactly take something without someone's concern. So I just kept admiring you instead. Some people wear an outfit. You somehow make the outfit look lucky."
     }
   ],
-  mapCategories: {
-    personality: "Chaya, you're beyond all the imaginary words and worlds. There are some people for whom every description still feels incomplete. I think you're somewhere in the latter.",
-    admire: "You've told me that you want to become independent, and I've always genuinely admired that about you. So whoever eventually becomes a part of your life, I hope he never becomes the reason you stop being the free soul you wanted to become.",
-    funny: "Our ridiculous conversations. Our random arguments (although we don't really have any). Our thoughts on books. Our memories. The things you've told me about your life, and the things I've told you about mine — the people we've been, the people we're becoming, and all the little moments that probably felt insignificant when they happened.",
-    sayings: "I still remember when you said, \"you're writing a book for me.\" You probably didn't mean it literally — but somehow, if I ever write one for you, I already know why it would be about you.",
-    birthday: "Please don't ever settle for someone who makes you feel like you have to become less of yourself just to be loved. Whoever comes into your life, I hope they simply walk beside you while you continue becoming everything you've always wanted to be. Happy birthday, Chaya."
-  },
+  mapCategories: [
+      {
+          "title": "The Free Soul 🦋",
+          "text": "If there's one thing I really wish for you, Chaya, it's that you never lose your freedom trying to fit into someone else's expectations. Chase the things you dream of, make your own choices, and become whoever you want to be. Don't make yourself smaller just to belong somewhere."
+      },
+      {
+          "title": "The Beautiful Contradiction 🌗",
+          "text": "You're such a contradiction, Chaya, and I mean that in the best way. One minute you're talking about life and people with a maturity that makes me forget your age, and the next you're blushing over the smallest compliment. Confident, sensitive, thoughtful, a little dramatic. All of it sits together somehow, and that's exactly what makes you interesting."
+      },
+      {
+          "title": "The Chaos Queen 👑",
+          "text": "I don't think you realise how easily you turn ordinary conversations into something memorable. The Gurumata–Shishya nonsense, the detective fantasies, those dramatic reactions… there's never a dull moment. You can turn one simple sentence into a whole episode. Honestly, your chaos deserves its own subject at Hogwarts, and I'd probably fail it."
+      },
+      {
+          "title": "The Quietly Resilient 🌱",
+          "text": "From what you've shared with me, I know life hasn't always been easy on you. Still, I admire how you think things through instead of letting them define you. Remember that being strong doesn't mean never breaking down. Sometimes strength is just letting yourself feel it."
+      },
+      {
+          "title": "The Unwritten Chapter 📖",
+          "text": "Maybe this is why I could never write a made-up version of you. You're still growing, figuring things out, questioning, becoming. How could I decide who you are when even you haven't finished writing yourself? I'd rather just watch you surprise the world in your own way."
+      }
+  ],
   finalMessage: "Some people enter your life quietly and somehow become part of your favourite memories.\n\nI'm genuinely glad our paths crossed.\n\nHappy Birthday, Gurumata. 🩶\n\nMay this year bring you the kind of happiness you don't have to pretend to be okay for."
 };
 
@@ -69,6 +182,7 @@ function goToSection(name) {
   // Wait for the fog to fully cover the screen before swapping —
   // this is what sells the "walking to the next room" feeling.
   setTimeout(() => {
+    window.scrollTo(0, 0);
     if (current) current.classList.remove('active');
     next.classList.add('active');
     if (!sectionInitialized.has(name) && sectionInitRegistry[name]) {
@@ -159,34 +273,77 @@ registerSectionInit('letter', initLetterScreen);
    ============================================ */
 function initSortingScreen() {
   const cards = document.querySelectorAll('.house-card');
-  const verdict = document.getElementById('house-verdict');
-  const verdictName = document.getElementById('house-verdict-name');
-  const verdictText = document.getElementById('house-verdict-text');
-  const continueBtn = document.getElementById('sorting-continue');
+  const stage = document.getElementById('door-stage');
+  const title = document.getElementById('story-title');
+  const subtitle = document.getElementById('story-subtitle');
+  const epigraph = document.getElementById('story-epigraph');
+  const body = document.getElementById('story-body');
+  const panel = document.getElementById('story-panel');
+  const backBtn = document.getElementById('story-back');
+  const continueBtn = document.getElementById('story-continue');
+
+  // Lighter tints so titles stay readable on the dark story panel
+  const houseColors = {
+    gryffindor: { main: '#b8433a', light: '#e8776c' },
+    ravenclaw:  { main: '#4a6fa5', light: '#86addf' },
+    hufflepuff: { main: '#d9a441', light: '#f2cb6e' },
+    slytherin:  { main: '#3f7a5c', light: '#74c79e' }
+  };
+
+  let busy = false;
+
+  function openDoor(house) {
+    if (busy) return;
+    busy = true;
+
+    const story = SITE_DATA.houseStories[house];
+    const colors = houseColors[house];
+
+    stage.style.setProperty('--door-color', colors.main);
+    stage.style.setProperty('--door-light', colors.light);
+    title.textContent = story.name;
+    subtitle.textContent = story.subtitle;
+    epigraph.textContent = SITE_DATA.houseResponses[house];
+    body.innerHTML = '';
+    story.paragraphs.forEach(text => {
+      const p = document.createElement('p');
+      p.textContent = text;
+      body.appendChild(p);
+    });
+    panel.scrollTop = 0;
+
+    document.body.classList.add('stage-open');
+    stage.classList.add('visible');
+    // let the closed doors paint first, then swing them open
+    setTimeout(() => stage.classList.add('open'), 500);
+    setTimeout(() => { busy = false; }, 2200);
+  }
+
+  function closeDoor() {
+    if (busy) return;
+    busy = true;
+    stage.classList.remove('open');
+    setTimeout(() => {
+      stage.classList.remove('visible');
+      document.body.classList.remove('stage-open');
+      busy = false;
+    }, 1500);
+  }
 
   cards.forEach(card => {
-    card.addEventListener('click', () => {
-      const house = card.dataset.house;
-
-      cards.forEach(c => {
-        c.classList.toggle('chosen', c === card);
-        c.classList.toggle('dimmed', c !== card);
-      });
-
-      const houseColor = getComputedStyle(card).getPropertyValue('--house-color').trim();
-      verdict.style.setProperty('--verdict-color', houseColor);
-      verdictName.textContent = house.charAt(0).toUpperCase() + house.slice(1);
-      verdictText.textContent = SITE_DATA.houseResponses[house];
-      verdict.classList.add('revealed');
-
-      verdict.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
+    card.addEventListener('click', () => openDoor(card.dataset.house));
   });
 
+  backBtn.addEventListener('click', closeDoor);
+
   continueBtn.addEventListener('click', () => {
-    // Next stop is the Memory Room — not built yet, so this
-    // safely no-ops until Step 4 adds data-section="memory".
     goToSection('memory');
+    // hide the door scene once the fog fully covers the screen
+    setTimeout(() => {
+      stage.classList.remove('open', 'visible');
+      document.body.classList.remove('stage-open');
+      busy = false;
+    }, 560);
   });
 }
 registerSectionInit('sorting', initSortingScreen);
@@ -220,6 +377,23 @@ function initMemoryScreen() {
     grid.appendChild(card);
   });
 
+  // Carousel feel: the centred card is biggest; the others tilt away and fade
+  const frames = [...grid.children];
+  const tiltFrames = () => {
+    const g = grid.getBoundingClientRect(), mid = g.left + g.width / 2;
+    frames.forEach(el => {
+      const b = el.getBoundingClientRect(), cx = b.left + b.width / 2;
+      const d = Math.min(1, Math.abs(cx - mid) / (g.width / 2));
+      el.style.setProperty('--s', (1 - 0.2 * d).toFixed(3));
+      el.style.setProperty('--r', ((cx < mid ? 1 : -1) * 28 * d).toFixed(1) + 'deg');
+      el.style.opacity = (1 - 0.55 * d).toFixed(2);
+    });
+  };
+  grid.addEventListener('scroll', () => requestAnimationFrame(tiltFrames), { passive: true });
+  addEventListener('resize', tiltFrames);
+  frames.forEach(el => el.addEventListener('click', () => el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })));
+  setTimeout(tiltFrames, 60);
+
   continueBtn.addEventListener('click', () => {
     // Next stop is the Map — not built yet, so this safely
     // no-ops until Step 5 adds data-section="map".
@@ -238,15 +412,7 @@ function initMapScreen() {
   const scrollContainer = document.getElementById('map-scroll');
   const continueBtn = document.getElementById('map-continue');
 
-  const labels = {
-    personality: "Her Personality",
-    admire: "Things I Admire",
-    funny: "Funny Memories",
-    sayings: "Little Things She Says",
-    birthday: "Birthday Message"
-  };
-
-  Object.keys(SITE_DATA.mapCategories).forEach(category => {
+  SITE_DATA.mapCategories.forEach(item => {
     const stop = document.createElement('div');
     stop.className = 'map-stop';
 
@@ -255,10 +421,13 @@ function initMapScreen() {
 
     const content = document.createElement('div');
     content.className = 'map-stop-content';
-    content.innerHTML = `
-      <p class="map-stop-title">${labels[category]}</p>
-      <p class="map-stop-text">${SITE_DATA.mapCategories[category]}</p>
-    `;
+    const title = document.createElement('p');
+    title.className = 'map-stop-title';
+    title.textContent = item.title;
+    const text = document.createElement('p');
+    text.className = 'map-stop-text';
+    text.textContent = item.text;
+    content.append(title, text);
 
     stop.appendChild(footprint);
     stop.appendChild(content);
@@ -394,43 +563,119 @@ function launchFireworks(container, burstCount = 4) {
   }
 }
 
-function playSpellIntro() {
-  const intro = document.getElementById('spell-intro');
-  const figure = document.getElementById('spell-figure');
-  const glow = document.getElementById('spell-glow');
-  const flash = document.getElementById('spell-flash');
-  const fireworksLayer = document.getElementById('spell-fireworks');
-  const message = document.getElementById('spell-message');
 
-  // Wand raises, spell charges
-  setTimeout(() => {
-    figure.classList.add('casting');
-    glow.classList.add('charging');
-  }, 700);
+/* ============================================
+   LANDING PAGE: title reveal + winged ball that flies as you scroll
+   ============================================ */
+function initLandingScreen() {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+  const $ = id => document.getElementById(id);
+  const stage = $('landing-stage'), screen = $('landing-screen'), ball = $('snitch'),
+        trail = $('snitch-trail'), tip = $('wand-tip'), target = $('castle-target'),
+        cta = $('l-cta'), hint = $('l-hint');
 
-  // Light bursts
-  setTimeout(() => {
-    flash.classList.add('burst');
-  }, 1900);
+  let offset = 0;
+  [['l-top', 'Happy Birthday'], ['l-name', 'Chayanika']].forEach(([id, text]) => {
+    const el = $(id);
+    [...text].forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.textContent = ch === ' ' ? '\u00a0' : ch;
+      s.style.setProperty('--i', offset + i);
+      el.appendChild(s);
+    });
+    offset += text.length;
+  });
 
-  // Fireworks fire off just as the flash peaks
-  setTimeout(() => {
-    launchFireworks(fireworksLayer, 5);
-  }, 2000);
+  let S, E, last = { x: 0, y: 0 };
+  const center = el => { const b = el.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; };
+  function measure() {   // ball flies from the wand tip (scroll 0) to the castle window (scroll 100%)
+    const keep = stage.style.getPropertyValue('--p') || '0';
+    stage.style.setProperty('--p', 0); S = center(tip);
+    stage.style.setProperty('--p', 1); E = center(target);
+    stage.style.setProperty('--p', keep);
+  }
+  function spark(x, y) {
+    if (trail.childElementCount > 50) return;
+    const d = document.createElement('i');
+    d.style.left = (x + Math.random() * 14 - 7) + 'px';
+    d.style.top = (y + Math.random() * 14 - 7) + 'px';
+    trail.appendChild(d);
+    d.addEventListener('animationend', () => d.remove());
+  }
+  function update() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const p = Math.min(1, Math.max(0, max > 0 ? scrollY / max : 0));
+    stage.style.setProperty('--p', p.toFixed(4));
+    const q = p * p * (3 - 2 * p);
+    const dx = E.x - S.x, dy = E.y - S.y, len = Math.hypot(dx, dy) || 1;
+    const amp = Math.min(innerWidth, innerHeight) * 0.22 * Math.sin(Math.PI * q) * Math.sin(q * Math.PI * 5);
+    const x = S.x + dx * q + (-dy / len) * amp, y = S.y + dy * q + (dx / len) * amp;
+    ball.style.transform = `translate3d(${x - 48}px, ${y - 32}px, 0) rotate(${Math.cos(q * Math.PI * 5) * 14}deg) scale(${1 - 0.65 * q})`;
+    if (ball.classList.contains('summoned') && Math.hypot(x - last.x, y - last.y) > 16) { spark(x, y); last = { x, y }; }
+    cta.classList.toggle('show', p > 0.9);
+    hint.classList.toggle('gone', p > 0.03);
+  }
 
-  // Message resolves out of the smoke/light
-  setTimeout(() => {
-    message.classList.add('reveal');
-  }, 2700);
+  measure();
+  update();
+  let ticking = false;
+  addEventListener('scroll', () => {
+    if (!screen.classList.contains('active') || ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { update(); ticking = false; });
+  }, { passive: true });
+  addEventListener('resize', () => { measure(); update(); });
+  setInterval(() => {   // idle sparkles while the ball hovers
+    if (screen.classList.contains('active') && ball.classList.contains('summoned')) {
+      const c = center(ball); spark(c.x, c.y);
+    }
+  }, 180);
 
-  // Whole scene fades to reveal the site underneath
-  setTimeout(() => {
-    intro.classList.add('fading');
-  }, 5400);
+  setTimeout(() => stage.classList.add('casting'), 1800);
+  setTimeout(() => { stage.classList.add('flash', 'titled'); launchFireworks($('l-fireworks'), 5); }, 2600);
+  setTimeout(() => ball.classList.add('summoned'), 3200);
+  setTimeout(() => hint.classList.add('show'), 5200);
+  hint.addEventListener('click', () => scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
+  cta.addEventListener('click', () => goToSection('envelope'));
+}
+registerSectionInit('landing', initLandingScreen);
 
-  setTimeout(() => {
-    intro.classList.add('done');
-  }, 6400);
+/* ============================================
+   COMPANION BALL: lives on every page after the landing.
+   Follows your finger/cursor, otherwise drifts as you scroll.
+   ============================================ */
+function initGlobalBall() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ball = document.getElementById('g-ball'), trail = document.getElementById('g-trail');
+  let x = innerWidth * 0.8, y = innerHeight * 0.3, lx = x, ly = y, px = null, py = null, lastMove = 0;
+  const point = e => { px = e.clientX; py = e.clientY; lastMove = performance.now(); };
+  addEventListener('pointermove', point, { passive: true });
+  addEventListener('pointerdown', point, { passive: true });
+  function spark(sx, sy) {
+    if (trail.childElementCount > 40) return;
+    const d = document.createElement('i');
+    d.style.left = (sx + Math.random() * 12 - 6) + 'px';
+    d.style.top = (sy + Math.random() * 12 - 6) + 'px';
+    trail.appendChild(d);
+    d.addEventListener('animationend', () => d.remove());
+  }
+  (function loop(t) {
+    const active = document.querySelector('.screen.active');
+    const onLanding = !active || active.dataset.section === 'landing';
+    ball.classList.toggle('on', !onLanding);
+    if (!onLanding && !document.hidden) {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      const sp = max > 0 ? scrollY / max : 0;
+      let tx, ty;
+      if (px !== null && t - lastMove < 2500) { tx = px + 30; ty = py - 30; }
+      else { tx = innerWidth * (0.5 + 0.38 * Math.sin(t / 1800 + sp * 7)); ty = innerHeight * (0.18 + 0.55 * sp + 0.08 * Math.sin(t / 900)); }
+      x += (tx - x) * 0.06; y += (ty - y) * 0.06;
+      ball.style.transform = `translate3d(${x - 36}px, ${y - 24}px, 0) rotate(${Math.max(-20, Math.min(20, (tx - x) * 0.08))}deg)`;
+      if (Math.hypot(x - lx, y - ly) > 14) { spark(x, y); lx = x; ly = y; }
+    }
+    requestAnimationFrame(loop);
+  })(0);
 }
 
 /* ============================================
@@ -439,7 +684,7 @@ function playSpellIntro() {
 document.addEventListener('DOMContentLoaded', () => {
   initAmbient();
   initParallaxTilt();
-  initEnvelopeScreen(); // envelope is the initial active section, init it directly
-  sectionInitialized.add('envelope');
-  playSpellIntro();
+  initLandingScreen();
+  initGlobalBall();
+  sectionInitialized.add('landing');
 });
