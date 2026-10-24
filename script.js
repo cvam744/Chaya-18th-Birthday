@@ -114,23 +114,23 @@ const SITE_DATA = {
   memories: [
     {
       title: "The Day We Met",
-      text: "We met in the GC, but I texted you in DM for the very first time on 4th July 2024. I dropped everything into just a single text because I wasn't getting an option to text you directly, so I replied to your story instead. Looking back, it feels like such a small moment, but honestly, I had no idea that one little reply would become the beginning of something so special."
+      text: "We met in the GC, but I texted you in DM for the very first time on 4th July 2024. I dropped everything into just a single text because I wasn't getting an option to text you directly, so I replied to your story instead. 🥹 Looking back, it feels like such a small moment, but honestly, I had no idea that one little reply would become the beginning of something so special. ❤️"
     },
     {
       title: "Dayan",
-      text: "Although I have so many memories I could put here, let's not do that — we'd probably need an entire book. I still remember the very first time you said in the GC that you were Dayan. It was kind of nerdy, but definitely so cute. I genuinely had so much fun talking to you, especially when I used to address you as \"Dayan,\" or even better, \"Sweet Dayan.\" Somehow, even the simplest conversations with you became memories that stayed with me."
+      text: "Although I have so many memories I could put here, let's not do that — we'd probably need an entire book. 😂 I still remember the very first time you said in the GC that you were Dayan. It was kind of nerdy, but definitely so cute. 🥹 I genuinely had so much fun talking to you, especially when I used to address you as \"Dayan,\" or even better, \"Sweet Dayan.\" ❤️ Somehow, even the simplest conversations with you became memories that stayed with me."
     },
     {
       title: "The Kite Runner",
-      text: "I never really had the courage to talk about my past with anyone. Then I read The Kite Runner, and somehow, this book inspired me to finally open up to you. I may have been a little clingy when I told you everything — or, well, not everything, actually. At that time, I felt completely helpless. I still do sometimes whenever I think about my past. There are things that are difficult to explain, and even harder to carry alone. But the way you listened to me gave me a little relief. It made me realise that, finally, I had someone with whom I could share things without having to think twice or worry about being judged. And honestly, that feeling meant more to me than I could ever properly explain."
+      text: "I never really had the courage to talk about my past with anyone. Then I read The Kite Runner, and somehow, this book inspired me to finally open up to you. I may have been a little clingy when I told you everything — or, well, not everything, actually. 😭 At that time, I felt completely helpless. I still do sometimes whenever I think about my past. There are things that are difficult to explain, and even harder to carry alone. But the way you listened to me gave me a little relief. It made me realise that, finally, I had someone with whom I could share things without having to think twice or worry about being judged. And honestly, that feeling meant more to me than I could ever properly explain. ❤️"
     },
     {
-      title: "Friendship",
-      text: "I understand that you may have felt a little disappointed about what happened between me and Karan. But trust me, Chayanika, that's just how human nature works. We all expect something from the people we care about, and when they don't live up to those expectations, we sometimes end up hurting ourselves more than they ever could. And when humans are hurt, they often behave in strange ways. Maybe they say things they don't mean, maybe they distance themselves, or maybe they simply become someone you don't recognise anymore. So, honestly, I didn't want to hold on to that. Maybe I lost him as a good friend, but somewhere along the way, I gained you as a best friend. And if I had to choose between holding on to what was lost and being grateful for what I found, I'd choose you every single time."
+      title: "Human",
+      text: "I understand that you may have felt a little disappointed about what happened between me and Karan. But trust me, Chayanika, that's just how human nature works. We all expect something from the people we care about, and when they don't live up to those expectations, we sometimes end up hurting ourselves more than they ever could. And when humans are hurt, they often behave in strange ways. Maybe they say things they don't mean, maybe they distance themselves, or maybe they simply become someone you don't recognise anymore. So, honestly, I didn't want to hold on to that. Maybe I lost him as a good friend, but somewhere along the way, I gained you as a best friend. And if I had to choose between holding on to what was lost and being grateful for what I found, I'd choose you every single time. ❤️"
     },
     {
       title: "The Freshers Dress",
-      text: "Trust me, Chayanika, you should seriously build your career in fashion designing or modelling. I should have posted so many pictures of you on this website, but I genuinely never got the chance to screenshot them because I couldn't take my eyes away from the beauty of God's creation. Okay, okay… that sounds extremely dramatic. But honestly, you looked absolutely beautiful. I could have taken a hundred screenshots, but then again, I can't exactly take something without someone's concern. So I just kept admiring you instead. Some people wear an outfit. You somehow make the outfit look lucky."
+      text: "Trust me, Chayanika, you should seriously build your career in fashion designing or modelling. 😂❤️ I should have posted so many pictures of you on this website, but I genuinely never got the chance to screenshot them because I couldn't take my eyes away from the beauty of God's creation. 😭✨ Okay, okay… that sounds extremely dramatic. 😂 But honestly, you looked absolutely beautiful. I could have taken a hundred screenshots, but then again, I can't exactly take something without someone's concern. 😭😂 So I just kept admiring you instead. ❤️ Some people wear an outfit. You somehow make the outfit look lucky. ✨"
     }
   ],
   mapCategories: [
@@ -254,10 +254,15 @@ function initLetterScreen() {
   const photo = document.getElementById('letter-photo');
   const fallback = document.getElementById('letter-photo-fallback');
 
-  photo.addEventListener('error', () => {
+  // The photo is embedded in letter-photo.js, so it doesn't depend on any folder
+  if (window.LETTER_PHOTO) photo.src = window.LETTER_PHOTO;
+  const showFallback = () => {
     photo.style.display = 'none';
     fallback.classList.add('show');
-  });
+  };
+  photo.addEventListener('error', showFallback);
+  // the image may already have failed before this ran, so check for that too
+  if (!window.LETTER_PHOTO && photo.complete && photo.naturalWidth === 0) showFallback();
 
   const continueBtn = document.getElementById('letter-continue');
   continueBtn.addEventListener('click', () => {
