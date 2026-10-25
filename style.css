@@ -1545,3 +1545,10 @@ body.stage-open {
 .frame-grid::-webkit-scrollbar { display: none; }
 .frame-card { flex: 0 0 140px; scroll-snap-align: center; transform: scale(var(--s, 1)) rotateY(var(--r, 0deg)); transition: translate .25s, border-color .25s, background .25s; }
 .frame-card:hover, .frame-card:focus-visible { transform: scale(var(--s, 1)) rotateY(var(--r, 0deg)); translate: 0 -3px; }
+
+
+/* music button */
+#music-btn { position: fixed; left: 14px; bottom: 14px; z-index: 25; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--gold); background: rgba(10,12,18,.65); color: var(--gold-bright); font-size: 1.2rem; cursor: pointer; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: opacity .3s; }
+#music-btn.off { opacity: .45; }
+#music-btn.waiting { animation: musicPulse 2s ease-in-out infinite; }
+@keyframes musicPulse { 50% { box-shadow: 0 0 16px rgba(230,201,136,.75); } }

@@ -684,6 +684,72 @@ function initGlobalBall() {
 }
 
 /* ============================================
+   MUSIC: "Happy Birthday" as a haunting music box (made live in the
+   browser, no audio file). Starts on her first tap; button toggles it.
+   ============================================ */
+function initMusic() {
+  const btn = document.createElement('button');
+  btn.id = 'music-btn';
+  btn.className = 'waiting';
+  btn.setAttribute('aria-label', 'Music on or off');
+  btn.textContent = '♪';
+  document.body.appendChild(btn);
+
+  // [semitones above middle C, beats] — minor-key version of the tune
+  const tune = [
+    [7,.75],[7,.25],[8,1],[7,1],[12,1],[10,2],
+    [7,.75],[7,.25],[8,1],[7,1],[14,1],[12,2],
+    [7,.75],[7,.25],[19,1],[15,1],[12,1],[10,1],[8,2],
+    [17,.75],[17,.25],[15,1],[12,1],[14,1],[12,2]
+  ];
+  const BEAT = 0.62;
+  let ctx = null, bus = null, timer = null;
+
+  function note(n, t, d) {
+    const f = 261.63 * Math.pow(2, n / 12);
+    [[1, .5], [2, .18], [3, .07]].forEach(([m, g]) => {
+      const o = ctx.createOscillator(), e = ctx.createGain();
+      o.frequency.value = f * m;
+      e.gain.setValueAtTime(0, t);
+      e.gain.linearRampToValueAtTime(g, t + .01);
+      e.gain.exponentialRampToValueAtTime(.0001, t + d * .6 + 1);
+      o.connect(e); e.connect(bus);
+      o.start(t); o.stop(t + d * .6 + 1.2);
+    });
+  }
+  function playOnce() {
+    let t = ctx.currentTime + .1, total = 0;
+    tune.forEach(([n, b]) => { note(n, t, b * BEAT); t += b * BEAT; total += b * BEAT; });
+    timer = setTimeout(playOnce, (total + 3) * 1000);   // short pause, then loop
+  }
+  function start() {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const master = ctx.createGain(); master.gain.value = .35; master.connect(ctx.destination);
+    bus = ctx.createGain(); bus.connect(master);
+    const delay = ctx.createDelay(), fb = ctx.createGain(), wet = ctx.createGain();
+    delay.delayTime.value = .3; fb.gain.value = .38; wet.gain.value = .45;   // soft echo
+    bus.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(master);
+    btn.classList.remove('waiting');
+    playOnce();
+  }
+  function begin(e) {
+    if (e.target.closest && e.target.closest('#music-btn')) return;
+    start();
+  }
+  ['pointerup', 'click', 'keydown'].forEach(ev => addEventListener(ev, function once(e) {
+    if (ctx) { removeEventListener(ev, once); return; }
+    begin(e);
+  }, { passive: true }));
+
+  btn.addEventListener('click', () => {
+    if (!ctx) { start(); return; }
+    if (ctx.state === 'running') { ctx.suspend(); btn.classList.add('off'); }
+    else { ctx.resume(); btn.classList.remove('off'); }
+  });
+}
+
+/* ============================================
    BOOT
    ============================================ */
 document.addEventListener('DOMContentLoaded', () => {
@@ -691,5 +757,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initParallaxTilt();
   initLandingScreen();
   initGlobalBall();
+  initMusic();
   sectionInitialized.add('landing');
 });
