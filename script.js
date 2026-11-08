@@ -125,10 +125,6 @@ const SITE_DATA = {
       text: "I never really had the courage to talk about my past with anyone. Then I read The Kite Runner, and somehow, this book inspired me to finally open up to you. I may have been a little clingy when I told you everything — or, well, not everything, actually. 😭 At that time, I felt completely helpless. I still do sometimes whenever I think about my past. There are things that are difficult to explain, and even harder to carry alone. But the way you listened to me gave me a little relief. It made me realise that, finally, I had someone with whom I could share things without having to think twice or worry about being judged. And honestly, that feeling meant more to me than I could ever properly explain. ❤️"
     },
     {
-      title: "Human",
-      text: "I understand that you may have felt a little disappointed about what happened between me and Karan. But trust me, Chayanika, that's just how human nature works. We all expect something from the people we care about, and when they don't live up to those expectations, we sometimes end up hurting ourselves more than they ever could. And when humans are hurt, they often behave in strange ways. Maybe they say things they don't mean, maybe they distance themselves, or maybe they simply become someone you don't recognise anymore. So, honestly, I didn't want to hold on to that. Maybe I lost him as a good friend, but somewhere along the way, I gained you as a best friend. And if I had to choose between holding on to what was lost and being grateful for what I found, I'd choose you every single time. ❤️"
-    },
-    {
       title: "The Freshers Dress",
       text: "Trust me, Chayanika, you should seriously build your career in fashion designing or modelling. 😂❤️ I should have posted so many pictures of you on this website, but I genuinely never got the chance to screenshot them because I couldn't take my eyes away from the beauty of God's creation. 😭✨ Okay, okay… that sounds extremely dramatic. 😂 But honestly, you looked absolutely beautiful. I could have taken a hundred screenshots, but then again, I can't exactly take something without someone's concern. 😭😂 So I just kept admiring you instead. ❤️ Some people wear an outfit. You somehow make the outfit look lucky. ✨"
     }
@@ -155,7 +151,18 @@ const SITE_DATA = {
           "text": "Maybe this is why I could never write a made-up version of you. You're still growing, figuring things out, questioning, becoming. How could I decide who you are when even you haven't finished writing yourself? I'd rather just watch you surprise the world in your own way."
       }
   ],
-  finalMessage: "Some people enter your life quietly and somehow become part of your favourite memories.\n\nI'm genuinely glad our paths crossed.\n\nHappy Birthday, Gurumata. 🩶\n\nMay this year bring you the kind of happiness you don't have to pretend to be okay for."
+  finalMessage: [
+      "Happy Birthday, Chaya! ❤️",
+      "I know this may not be the best gift, and honestly, I wasn't sure how to make this day special for you. I don't have your address, nor do I know much about your personal life, so I had to settle for something I could create from wherever I am.",
+      "But if I ever had the chance, I would have bought you a piece of land right beside my house and built a little home for you with my own hands. I would have decorated your room with BTS posters and posters of all the web series you love. I would have built you a separate library and filled it with every book your heart could ever wish to read.",
+      "And it wouldn't have stopped there.",
+      "I would have celebrated every little thing that made you happy. Whether you slept for an entire day, cooked a new dish, styled an outfit all by yourself, or got dressed up looking like a Disney princess, I would have made sure you knew that even the smallest things you do are worth celebrating. I would have wanted that home to be a place where you could leave all your worries at the door, where you could be yourself without having to explain anything, and where you could always find a little peace after a difficult day.",
+      "I would have built around you all the little things that make life feel lighter. Not because you need someone to make your life beautiful, but because you deserve to enjoy the beauty you've been creating in it yourself.",
+      "But well, here I am, with this little gift. And I don't even know if I can call it a gift. Maybe it's just my small attempt at making you smile today. I may not be able to give you that little universe I just described, but I genuinely hope life gives you something even more beautiful than that. I hope you find places that feel like home, people who celebrate your happiness without making you earn it, and moments that remind you how lovely it is to be alive.",
+      "And Chaya, never let the challenges ahead make you doubt yourself. Life won't always be easy, and there will be days when things don't go as planned. But I hope you never lose that little spark of yours. Keep exploring, keep learning, keep being curious, keep making mistakes, and keep surprising yourself with what you're capable of. You have so much life ahead of you, and I hope you make the most of every bit of it.",
+      "You are the best, the better, and the bestest girl in the whole universe, Chaya. Never settle for a life that feels smaller than the one you've dreamed of.",
+      "Enjoy your day, gurlllll. You deserve all the happiness this universe has to offer."
+  ]
 };
 
 /* ============================================
@@ -357,53 +364,51 @@ registerSectionInit('sorting', initSortingScreen);
    MEMORY ROOM
    ============================================ */
 function initMemoryScreen() {
-  const grid = document.getElementById('frame-grid');
-  const reveal = document.getElementById('memory-reveal');
-  const revealTitle = document.getElementById('memory-reveal-title');
-  const revealText = document.getElementById('memory-reveal-text');
-  const continueBtn = document.getElementById('memory-continue');
+  const themes = ['bts', 'doja', 'lana', 'selena'];   // one theme per memory, in order
+  const track = document.getElementById('mem-track');
+  const bgs = document.querySelectorAll('.mem-bg');
 
-  SITE_DATA.memories.forEach((memory, index) => {
-    const card = document.createElement('button');
-    card.className = 'frame-card';
-    card.textContent = memory.title;
-    card.dataset.index = index;
+  SITE_DATA.memories.forEach((memory, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'mem-sec mem-' + themes[i % themes.length];
+    sec.dataset.index = i % themes.length;
+    if (i === 0) {
+      sec.innerHTML = '<h2 class="memory-title">The Memory Room</h2>' +
+        '<p class="memory-sub">Scroll down — every memory has a world of its own.</p>';
+    }
+    const card = document.createElement('article');
+    card.className = 'mem-card';
+    const title = document.createElement('h3');
+    title.textContent = memory.title;
+    const text = document.createElement('p');
+    text.textContent = memory.text;
+    card.append(title, text);
+    sec.appendChild(card);
 
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.frame-card').forEach(c => c.classList.remove('opened'));
-      card.classList.add('opened');
-
-      revealTitle.textContent = memory.title;
-      revealText.textContent = memory.text;
-      reveal.classList.add('revealed');
-      reveal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
-
-    grid.appendChild(card);
+    if (i === SITE_DATA.memories.length - 1) {
+      const next = document.createElement('button');
+      next.className = 'continue-btn mem-continue';
+      next.textContent = 'Continue';
+      next.addEventListener('click', () => goToSection('map'));
+      sec.appendChild(next);
+    }
+    track.appendChild(sec);
   });
 
-  // Carousel feel: the centred card is biggest; the others tilt away and fade
-  const frames = [...grid.children];
-  const tiltFrames = () => {
-    const g = grid.getBoundingClientRect(), mid = g.left + g.width / 2;
-    frames.forEach(el => {
-      const b = el.getBoundingClientRect(), cx = b.left + b.width / 2;
-      const d = Math.min(1, Math.abs(cx - mid) / (g.width / 2));
-      el.style.setProperty('--s', (1 - 0.2 * d).toFixed(3));
-      el.style.setProperty('--r', ((cx < mid ? 1 : -1) * 28 * d).toFixed(1) + 'deg');
-      el.style.opacity = (1 - 0.55 * d).toFixed(2);
+  const secs = track.querySelectorAll('.mem-sec');
+  // the section crossing the middle of the screen decides the background theme
+  const themeWatcher = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const idx = Number(en.target.dataset.index);
+      bgs.forEach((bg, k) => bg.classList.toggle('on', k === idx));
     });
-  };
-  grid.addEventListener('scroll', () => requestAnimationFrame(tiltFrames), { passive: true });
-  addEventListener('resize', tiltFrames);
-  frames.forEach(el => el.addEventListener('click', () => el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })));
-  setTimeout(tiltFrames, 60);
-
-  continueBtn.addEventListener('click', () => {
-    // Next stop is the Map — not built yet, so this safely
-    // no-ops until Step 5 adds data-section="map".
-    goToSection('map');
-  });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  // each card rises into view as its section appears
+  const reveal = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('in-view'); });
+  }, { threshold: 0.2 });
+  secs.forEach(s => { themeWatcher.observe(s); reveal.observe(s); });
 }
 registerSectionInit('memory', initMemoryScreen);
 
@@ -485,7 +490,13 @@ function launchConfetti() {
 }
 
 function initFinalScreen() {
-  document.getElementById('final-message').textContent = SITE_DATA.finalMessage;
+  const messageBox = document.getElementById('final-message');
+  SITE_DATA.finalMessage.forEach((text, i) => {
+    const p = document.createElement('p');
+    p.textContent = text;
+    if (i === 0) p.className = 'final-greeting';
+    messageBox.appendChild(p);
+  });
 
   const spellBtn = document.getElementById('spell-btn');
   const finalContent = document.getElementById('final-content');
@@ -496,6 +507,7 @@ function initFinalScreen() {
     spellBtn.classList.add('cast');
 
     launchConfetti();
+    window.scrollTo(0, 0);
 
     finalContent.classList.add('hidden');
     setTimeout(() => {
