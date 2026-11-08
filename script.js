@@ -190,6 +190,7 @@ function goToSection(name) {
   // this is what sells the "walking to the next room" feeling.
   setTimeout(() => {
     window.scrollTo(0, 0);
+    document.body.classList.toggle('no-ambient', name === 'landing' || name === 'memory');
     if (current) current.classList.remove('active');
     next.classList.add('active');
     if (!sectionInitialized.has(name) && sectionInitRegistry[name]) {
@@ -235,41 +236,53 @@ function initAmbient() {
 function initEnvelopeScreen() {
   document.getElementById('arrival-text').textContent = SITE_DATA.arrivalText;
 
-  const envelope = document.getElementById('envelope');
+  const cake = document.getElementById('cake');
+  const hint = document.getElementById('cake-hint');
   const intro = document.getElementById('intro-sequence');
 
-  envelope.addEventListener('click', () => {
-    if (envelope.classList.contains('opening')) return;
-    envelope.classList.add('opening');
+  // At first only the line above is visible; after 3 seconds the scenery and the cake arrive
+  document.body.classList.add('dim-ambient');
+  setTimeout(() => { document.body.classList.remove('dim-ambient'); cake.classList.add('ready'); }, 3000);
 
-    // Play the one-time cloud + owl delivery, then move on.
-    intro.classList.add('playing');
-
-    const INTRO_DURATION = 3400; // clouds + owl flight + letter drop
-    setTimeout(() => {
-      intro.classList.remove('playing');
-      goToSection('letter');
-    }, INTRO_DURATION);
-  });
+  function blow() {
+    if (!cake.classList.contains('ready') || cake.classList.contains('blown')) return;
+    cake.classList.add('blown');                       // flame goes out, smoke rises
+    setTimeout(() => intro.classList.add('playing'), 1000);   // then the clouds + owl bring the letter
+    setTimeout(() => { intro.classList.remove('playing'); goToSection('letter'); }, 1000 + 3400);
+  }
+  cake.addEventListener('click', blow);
+  hint.addEventListener('click', blow);
 }
 registerSectionInit('envelope', initEnvelopeScreen);
 
 /* ============================================
    LETTER SCREEN
    ============================================ */
+// The letter photo lives in letter-photo.js; load it quietly in the background instead of at startup
+function loadLetterPhoto(done) {
+  if (window.LETTER_PHOTO) return done(window.LETTER_PHOTO);
+  if (!loadLetterPhoto.promise) {
+    loadLetterPhoto.promise = new Promise(resolve => {
+      const s = document.createElement('script');
+      s.src = 'letter-photo.js';
+      s.onload = () => resolve(window.LETTER_PHOTO || null);
+      s.onerror = () => resolve(null);
+      document.body.appendChild(s);
+    });
+  }
+  loadLetterPhoto.promise.then(done);
+}
+
 function initLetterScreen() {
   const photo = document.getElementById('letter-photo');
   const fallback = document.getElementById('letter-photo-fallback');
 
-  // The photo is embedded in letter-photo.js, so it doesn't depend on any folder
-  if (window.LETTER_PHOTO) photo.src = window.LETTER_PHOTO;
   const showFallback = () => {
     photo.style.display = 'none';
     fallback.classList.add('show');
   };
   photo.addEventListener('error', showFallback);
-  // the image may already have failed before this ran, so check for that too
-  if (!window.LETTER_PHOTO && photo.complete && photo.naturalWidth === 0) showFallback();
+  loadLetterPhoto(src => { if (src) photo.src = src; else showFallback(); });
 
   const continueBtn = document.getElementById('letter-continue');
   continueBtn.addEventListener('click', () => {
@@ -532,7 +545,7 @@ function initParallaxTilt() {
   let ticking = false;
 
   window.addEventListener('mousemove', (e) => {
-    if (ticking) return;
+    if (ticking || document.body.classList.contains('no-ambient')) return;
     ticking = true;
 
     requestAnimationFrame(() => {
@@ -649,10 +662,10 @@ function initLandingScreen() {
     }
   }, 180);
 
-  setTimeout(() => stage.classList.add('casting'), 1800);
-  setTimeout(() => { stage.classList.add('flash', 'titled'); launchFireworks($('l-fireworks'), 5); }, 2600);
-  setTimeout(() => ball.classList.add('summoned'), 3200);
-  setTimeout(() => hint.classList.add('show'), 5200);
+  setTimeout(() => stage.classList.add('casting'), 1000);
+  setTimeout(() => { stage.classList.add('flash', 'titled'); launchFireworks($('l-fireworks'), 5); }, 1600);
+  setTimeout(() => ball.classList.add('summoned'), 2200);
+  setTimeout(() => hint.classList.add('show'), 3600);
   hint.addEventListener('click', () => scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
   cta.addEventListener('click', () => goToSection('envelope'));
 }
@@ -765,10 +778,12 @@ function initMusic() {
    BOOT
    ============================================ */
 document.addEventListener('DOMContentLoaded', () => {
+  document.body.classList.add('no-ambient');   // the landing page covers it, so don't draw it
   initAmbient();
   initParallaxTilt();
   initLandingScreen();
   initGlobalBall();
   initMusic();
+  setTimeout(() => loadLetterPhoto(() => {}), 2500);
   sectionInitialized.add('landing');
 });
